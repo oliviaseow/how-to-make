@@ -98,7 +98,7 @@
 <ol>
   <li>Work through a git tutorial</li>
   <li>Build a personal site in the class archive</li>
-  <li>Characterize your lasercutter’s focus, power, speed, rate, kerf, joint clearance and types</li>
+  <li>Characterize your lasercutter</li>
   <li>Cut something on the vinyl cutter</li>
   <li>Design, laser cut, and document a parametric construction kit, accounting for the lasercutter kerf, which can be assembled in multiple ways</li>
 </ol>
@@ -131,15 +131,68 @@ The commit must have a message</p>
 
 <p>I wanted to create something that is clean and mobile-friendly. Here’s what my landing page looks like right now. I’m hoping to add photos or videos of my projects as they come in 📸</p>
 
-<p><img src="../site-theme/assets/images/landing.jpg" alt="landing page" /></p>
+<p><img src="../site-theme/assets/images/week2/landing.jpg" alt="landing page" /></p>
 
 <h2 id="3-laser-cutter-stats">3. Laser cutter stats</h2>
 
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce bibendum neque eget nunc mattis eu sollicitudin enim tincidunt.</p>
+<p>The EDS shop has <a href="https://www.ulsinc.com/product-matrix">Universal Lasers</a>. Since the condition of laser cuts vary depending on the machine’s condition and mental state, a group of us from the EECS section ran several tests to characterize its current capabilities.</p>
 
-<h2 id="4-vinyl-cut-somethin">4. Vinyl cut somethin’</h2>
+<h3 id="power-vs-speed">Power vs. speed</h3>
 
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce bibendum neque eget nunc mattis eu sollicitudin enim tincidunt.</p>
+<p>We used different power and speed combinations to cut out the squares as shown in the picture below. A low power or slow speed may not be sufficient to cut through the material, but going too high or fast may cause charring. We found that a power of <code class="language-plaintext highlighter-rouge">100%</code> and speed of <code class="language-plaintext highlighter-rouge">18%</code> was just good enough to cut through the cardboard material without burning it.</p>
+
+<p><img src="../site-theme/assets/images/week2/power-speed.jpg" alt="power vs speed calibration" /></p>
+
+<h3 id="kerf">Kerf</h3>
+
+<p>The <em>kerf</em> is the material removed by the cutting process. While small, this can affect the fit of two laser cut pieces, and can also add up when cut pieces are stacked together. The table below shows the test that we carried out. On average, the pieces lost <code class="language-plaintext highlighter-rouge">0.00625"</code> or <code class="language-plaintext highlighter-rouge">0.159mm</code> per cut.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Design</th>
+      <th>Actual</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1” x 1”</td>
+      <td>0.989” x 0.981”</td>
+    </tr>
+    <tr>
+      <td>1” x 1”</td>
+      <td>0.9915” x 0.991”</td>
+    </tr>
+    <tr>
+      <td>2” x 2”</td>
+      <td>1.989” x 1.9835”</td>
+    </tr>
+    <tr>
+      <td>2” x 2”</td>
+      <td>1.9895” x 1.9855”</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="joint-clearance">Joint clearance</h3>
+
+<p>Because cardboard has a give, we found that a <code class="language-plaintext highlighter-rouge">4.3mm</code> thick piece is able to fit into (theoretical) slots ranging from <code class="language-plaintext highlighter-rouge">4.0mm</code> to <code class="language-plaintext highlighter-rouge">4.2mm</code> at decreasing levels of <em>snug-ness</em>. Due to the aforementioned kerf, the real size of the slot is a little bigger.</p>
+
+<p><img src="../site-theme/assets/images/week2/fit.jpg" alt="fit calibration" /></p>
+
+<h3 id="focus">Focus</h3>
+
+<p>Because the beam from the laser cutter is somewhat funnel-shaped, it cuts with a wider kerf when the material is too far or too near. It is thus important to adjust the z-axis with the calibration tool. Moreover, some materials may have irregular thickness, so we have to re-calibrate the machine at several spots.</p>
+
+<p><a href="https://fab.cba.mit.edu/classes/863.21/EECS/people/benjtang/">Ben</a> and I also experimented with creating different joints in Fusion 360.</p>
+
+<p><img src="../site-theme/assets/images/week2/joints.jpg" alt="joints in Fusion 360" /></p>
+
+<h2 id="4-vinyl-catter">4. Vinyl <em>catter</em></h2>
+
+<p>I rly like cats 😻</p>
+
+<p><img src="../site-theme/assets/images/week2/cats-vinyl.jpg" alt="landing page" /></p>
 
 <h2 id="5-parametric-construction-kit">5. Parametric construction kit</h2>
 
