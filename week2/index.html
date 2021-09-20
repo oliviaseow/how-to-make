@@ -125,9 +125,9 @@ The commit must have a message</p>
 
 <h2 id="2-my-site">2. My site</h2>
 
-<p>Since I was expecting a fair amount of writing, I decided to use <a href="https://jekyllrb.com/">Jekyll</a> to generate HTML from .md documents. Jekyll requires Ruby (&gt;=v2.5.0), RubyGems, GCC, and Make. You can <a href="https://jekyllrb.com/tutorials/convert-site-to-jekyll/#1-create-a-template-for-your-default-layout">convert a HTML site to Jekyll</a>, or <a href="https://jekyllrb.com/docs/">get started</a> with a fresh site. I found that <a href="https://jekyllrb.com/docs/themes/">themes</a> like <a href="https://github.com/jekyll/minima">minima</a> are a good place to start tinkering on the CSS.</p>
+<p>Since I was expecting a fair amount of writing, I decided to use <a href="https://jekyllrb.com/">Jekyll</a> to generate HTML from .md documents. Jekyll requires Ruby (&gt;=v2.5.0), RubyGems, GCC, and Make. You can <a href="https://jekyllrb.com/tutorials/convert-site-to-jekyll/#1-create-a-template-for-your-default-layout">convert a HTML site to Jekyll</a>, or <a href="https://jekyllrb.com/docs/">get started</a> with a fresh site. I found that <a href="https://jekyllrb.com/docs/themes/">themes</a> like <a href="https://github.com/jekyll/minima">minima</a> are a good place to start tinkering. I ended up taking a couple of inspirations and further customizing them to create something I liked.</p>
 
-<p>To save space, I minified javascript files and compressed images using Neil’s recommended ImageMagick command <code class="language-plaintext highlighter-rouge">mogrify -quality 50% -resize 1000 *.jpg</code>.</p>
+<p>To save repository space as directed, I minified javascript files and compressed images using Neil’s recommended ImageMagick command <code class="language-plaintext highlighter-rouge">mogrify -quality 50% -resize 1000 *.jpg</code>. Another big culprit for space seems to be font. I tried to optimize for space but as a consequence the custom font will not load on some browsers.</p>
 
 <p>I wanted to create something that is clean and mobile-friendly. Here’s what my landing page looks like right now. I’m hoping to add photos or videos of my projects as they come in 📸</p>
 
@@ -182,7 +182,7 @@ The commit must have a message</p>
 
 <h3 id="focus">Focus</h3>
 
-<p>Because the beam from the laser cutter is somewhat funnel-shaped, it cuts with a wider kerf when the material is too far or too near. It is thus important to adjust the z-axis with the calibration tool. Moreover, some materials may have irregular thickness, so we have to re-calibrate the machine at several spots.</p>
+<p>Because the beam from the laser cutter is somewhat hourglass-shaped, it cuts with a wider kerf when the material is too far or too near. It is thus important to adjust the z-axis with the calibration tool. Moreover, some materials may have irregular thickness, so we have to re-calibrate the machine at several spots for ideal crispiness.</p>
 
 <p><a href="https://fab.cba.mit.edu/classes/863.21/EECS/people/benjtang/">Ben</a> and I also experimented with creating different joints in Fusion 360.</p>
 
@@ -190,9 +190,29 @@ The commit must have a message</p>
 
 <h2 id="4-vinyl-catter">4. Vinyl <em>catter</em></h2>
 
-<p>I rly like cats 😻</p>
+<p>I decided to cut some cat silhouettes 😻</p>
 
 <p><img src="../site-theme/assets/images/week2/cats-vinyl.jpg" alt="landing page" /></p>
+
+<p>I put an uncompressed .png version of the above file into <a href="https://mods.cba.mit.edu/">mods</a> and set up the pipeline for cutting on the Roland GS-24.</p>
+
+<p><img src="../site-theme/assets/images/week2/mods.jpg" alt="mods" /></p>
+
+<p>Then, I set up the vinyl cutter (feed in vinyl, calibrate knife) and started the cut.</p>
+
+<p><img src="../site-theme/assets/images/week2/mods-setup.jpg" alt="mods-setup" /></p>
+
+<p>The cutter was at <code class="language-plaintext highlighter-rouge">140gf</code>, but Anthony mentioned that I should have probably cut with more force since the machine was not in a cutty mood today (paraphrasing).</p>
+
+<p><img src="../site-theme/assets/images/week2/roland.jpg" alt="roland" /></p>
+
+<p>I transfered the vinyl onto sticky <em>transfer paper</em>, and then reversed the design onto the surface of my computer. Kitties galore!</p>
+
+<p><img src="../site-theme/assets/images/week2/cats-computer.jpg" alt="cats-computer" /></p>
+
+<h3 id="reflections">Reflections</h3>
+
+<p>The process of trasnferring the vinyl was not that smooth, there were several rips and bubbles in the sticker. Besides increasing the cut force, I should have been more mindful about the design and peeled with less aggression. I should have also cleaned the knife of the vinyl cutter.</p>
 
 <h2 id="5-parametric-construction-kit">5. Parametric construction kit</h2>
 
