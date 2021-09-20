@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, minimum-scale=1.0">
 <title>Week 2</title>
 
-	<meta name="description" content="Page description">
+	<meta name="description" content="Project management, computer-controlled cutting, version control">
 
 
 <link rel="icon" href="../favicon.ico" type="image/x-icon">
@@ -65,7 +65,7 @@
 									<h1 class="hero-subheader__title">Week 2</h1>
 								
 								
-									<p class="hero-subheader__desc">Page description</p>
+									<p class="hero-subheader__desc">Project management, computer-controlled cutting, version control</p>
 								
 								
 									
@@ -93,7 +93,65 @@
 				<div class="row">
 					<div class="col-md-7">
 						<div class="content">
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce bibendum neque eget nunc mattis eu sollicitudin enim tincidunt. Vestibulum lacus tortor, ultricies id dignissim ac, bibendum in velit.</p>
+							<h1 id="assignments">Assignments</h1>
+
+<ol>
+  <li>Work through a git tutorial</li>
+  <li>Build a personal site in the class archive</li>
+  <li>Characterize your lasercutter’s focus, power, speed, rate, kerf, joint clearance and types</li>
+  <li>Cut something on the vinyl cutter</li>
+  <li>Design, laser cut, and document a parametric construction kit, accounting for the lasercutter kerf, which can be assembled in multiple ways</li>
+</ol>
+
+<h2 id="1-git-refresher">1. Git refresher</h2>
+
+<p><code class="language-plaintext highlighter-rouge">$ git status</code><br />
+Displays the status of your working directory. Options include new, staged, and modified files. It will retrieve branch name, current commit identifier, and changes pending commit.</p>
+
+<p><code class="language-plaintext highlighter-rouge">$ git add [file]</code><br />
+Add a file to the staging area. Use in place of the full file path to add all changed files from the current directory down into the directory tree.</p>
+
+<p><code class="language-plaintext highlighter-rouge">$ git diff [file]</code><br />
+Show changes between working directory and staging area.</p>
+
+<p><code class="language-plaintext highlighter-rouge">$ git checkout -- [file]</code><br />
+Discard changes in working directory. This operation is unrecoverable.</p>
+
+<p><code class="language-plaintext highlighter-rouge">$ git commit</code><br />
+Create a new commit from changes added to the staging area.
+The commit must have a message</p>
+
+<p>Source: <a href="https://about.gitlab.com/images/press/git-cheat-sheet.pdf">GitLab</a></p>
+
+<h2 id="2-my-site">2. My site</h2>
+
+<p>Since I was expecting a fair amount of writing, I decided to use <a href="https://jekyllrb.com/">Jekyll</a> to generate HTML from .md documents. Jekyll requires Ruby (&gt;=v2.5.0), RubyGems, GCC, and Make. You can <a href="https://jekyllrb.com/tutorials/convert-site-to-jekyll/#1-create-a-template-for-your-default-layout">convert a HTML site to Jekyll</a>, or <a href="https://jekyllrb.com/docs/">get started</a> with a fresh site. I found that <a href="https://jekyllrb.com/docs/themes/">themes</a> like <a href="https://github.com/jekyll/minima">minima</a> are a good place to start tinkering on the CSS.</p>
+
+<p>To save space, I minified javascript files and compressed images using Neil’s recommended ImageMagick command <code class="language-plaintext highlighter-rouge">mogrify -quality 50% -resize 1000 *.jpg</code>.</p>
+
+<p>I wanted to create something that is clean and mobile-friendly. Here’s what my landing page looks like right now. I’m hoping to add photos or videos of my projects as they come in 📸</p>
+
+<p><img src="../site-theme/assets/images/landing.jpg" alt="landing page" /></p>
+
+<h2 id="3-laser-cutter-stats">3. Laser cutter stats</h2>
+
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce bibendum neque eget nunc mattis eu sollicitudin enim tincidunt.</p>
+
+<h2 id="4-vinyl-cut-somethin">4. Vinyl cut somethin’</h2>
+
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce bibendum neque eget nunc mattis eu sollicitudin enim tincidunt.</p>
+
+<h2 id="5-parametric-construction-kit">5. Parametric construction kit</h2>
+
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce bibendum neque eget nunc mattis eu sollicitudin enim tincidunt.</p>
+
+<h1 id="resources">Resources</h1>
+
+<ol>
+  <li><a href="http://academy.cba.mit.edu/classes/project_management/index.html">Project management</a></li>
+  <li><a href="http://academy.cba.mit.edu/classes/computer_cutting/index.html">Computer-controlled cutting</a></li>
+  <li><a href="http://academy.cba.mit.edu/classes/computer_design/image.html">ImageMagick commands</a></li>
+</ol>
 
 						</div><!-- /.content -->
 					</div><!-- /.col -->
