@@ -21,7 +21,7 @@
 			
 				<li><a href="https://fab.cba.mit.edu/classes/863.21/">Class site</a></li>
 			
-				<li><a href="https://www.oliviaseow.com/about">About me</a></li>
+				<li><a href="https://www.oliviaseow.com">Portfolio</a></li>
 			
 		</ul><!-- /.offcanvas__nav -->
 	</div><!-- /.offcanvas -->
@@ -40,7 +40,7 @@
 							
 								<li><a href="https://fab.cba.mit.edu/classes/863.21/">Class site</a></li>
 							
-								<li><a href="https://www.oliviaseow.com/about">About me</a></li>
+								<li><a href="https://www.oliviaseow.com">Portfolio</a></li>
 							
 						</ul><!-- /.site-header__nav -->
 						<button class="offcanvas-toggle visible-xs">
@@ -131,17 +131,17 @@ The commit must have a message</p>
 
 <p>I wanted to create something that is clean and mobile-friendly. Here’s what my landing page looks like right now. I’m hoping to add photos or videos of my projects as they come in 📸</p>
 
-<p><img src="../site-theme/assets/images/week2/landing.jpg" alt="landing page" /></p>
+<p><img src="../images/week2/landing.jpg" alt="landing page" /></p>
 
 <h2 id="3-laser-cutter-stats">3. Laser cutter stats</h2>
 
-<p>The EDS shop has <a href="https://www.ulsinc.com/product-matrix">Universal Lasers</a>. Since the condition of laser cuts vary depending on the machine’s condition and mental state, a group of us from the EECS section ran several tests to characterize its current capabilities.</p>
+<p>The EDS shop has blue <a href="https://www.ulsinc.com/product-matrix">Universal Lasers</a>. Since the condition of laser cuts vary depending on the machine’s condition and mental state, a group of us from the EECS section ran several tests to characterize its current capabilities.</p>
 
 <h3 id="power-vs-speed">Power vs. speed</h3>
 
 <p>We used different power and speed combinations to cut out the squares as shown in the picture below. A low power or slow speed may not be sufficient to cut through the material, but going too high or fast may cause charring. We found that a power of <code class="language-plaintext highlighter-rouge">100%</code> and speed of <code class="language-plaintext highlighter-rouge">18%</code> was just good enough to cut through the cardboard material without burning it.</p>
 
-<p><img src="../site-theme/assets/images/week2/power-speed.jpg" alt="power vs speed calibration" /></p>
+<p><img src="../images/week2/power-speed.jpg" alt="power vs speed calibration" /></p>
 
 <h3 id="kerf">Kerf</h3>
 
@@ -178,45 +178,69 @@ The commit must have a message</p>
 
 <p>Because cardboard has a give, we found that a <code class="language-plaintext highlighter-rouge">4.3mm</code> thick piece is able to fit into (theoretical) slots ranging from <code class="language-plaintext highlighter-rouge">4.0mm</code> to <code class="language-plaintext highlighter-rouge">4.2mm</code> at decreasing levels of <em>snug-ness</em>. Due to the aforementioned kerf, the real size of the slot is a little bigger.</p>
 
-<p><img src="../site-theme/assets/images/week2/fit.jpg" alt="fit calibration" /></p>
+<p><img src="../images/week2/fit.jpg" alt="fit calibration" /></p>
 
 <h3 id="focus">Focus</h3>
 
 <p>Because the beam from the laser cutter is somewhat hourglass-shaped, it cuts with a wider kerf when the material is too far or too near. It is thus important to adjust the z-axis with the calibration tool. Moreover, some materials may have irregular thickness, so we have to re-calibrate the machine at several spots for ideal crispiness.</p>
 
-<p><a href="https://fab.cba.mit.edu/classes/863.21/EECS/people/benjtang/">Ben</a> and I also experimented with creating different joints in Fusion 360.</p>
+<p>Ben and I also experimented with creating different joints in Fusion 360.</p>
 
-<p><img src="../site-theme/assets/images/week2/joints.jpg" alt="joints in Fusion 360" /></p>
+<p><img src="../images/week2/joints.jpg" alt="joints in Fusion 360" /></p>
 
 <h2 id="4-vinyl-catter">4. Vinyl <em>catter</em></h2>
 
 <p>I decided to cut some cat silhouettes 😻</p>
 
-<p><img src="../site-theme/assets/images/week2/cats-vinyl.jpg" alt="landing page" /></p>
+<p><img src="../images/week2/cats-vinyl.jpg" alt="landing page" /></p>
 
 <p>I put an uncompressed .png version of the above file into <a href="https://mods.cba.mit.edu/">mods</a> and set up the pipeline for cutting on the Roland GS-24.</p>
 
-<p><img src="../site-theme/assets/images/week2/mods.jpg" alt="mods" /></p>
+<p><img src="../images/week2/mods.jpg" alt="mods" /></p>
 
 <p>Then, I set up the vinyl cutter (feed in vinyl, calibrate knife) and started the cut.</p>
 
-<p><img src="../site-theme/assets/images/week2/mods-setup.jpg" alt="mods-setup" /></p>
+<p><img src="../images/week2/mods-setup.jpg" alt="mods-setup" /></p>
 
 <p>The cutter was at <code class="language-plaintext highlighter-rouge">140gf</code>, but Anthony mentioned that I should have probably cut with more force since the machine was not in a cutty mood today (paraphrasing).</p>
 
-<p><img src="../site-theme/assets/images/week2/roland.jpg" alt="roland" /></p>
+<p><img src="../images/week2/roland.jpg" alt="roland" /></p>
 
-<p>I transfered the vinyl onto sticky <em>transfer paper</em>, and then reversed the design onto the surface of my computer. Kitties galore!</p>
+<p>I transfered the vinyl onto sticky <em>transfer paper</em>, and then reversed the design onto the surface of my computer with the help of precision tweezers. Kitties galore!</p>
 
-<p><img src="../site-theme/assets/images/week2/cats-computer.jpg" alt="cats-computer" /></p>
+<p><img src="../images/week2/cats-computer.jpg" alt="cats-computer" /></p>
 
-<h3 id="reflections">Reflections</h3>
+<p>Besides being difficult to position, the process of transferring the vinyl was not that smooth, and there were several rips and bubbles in the sticker. Suggestions for future me:</p>
 
-<p>The process of trasnferring the vinyl was not that smooth, there were several rips and bubbles in the sticker. Besides increasing the cut force, I should have been more mindful about the design and peeled with less aggression. I should have also cleaned the knife of the vinyl cutter.</p>
+<ul>
+  <li>Increase cut force from <code class="language-plaintext highlighter-rouge">140gf</code> (but test first)</li>
+  <li>Be more mindful about the design when peeling</li>
+  <li>Peel with less aggression</li>
+  <li>Clean vinyl cutter knife prior to cutting</li>
+</ul>
 
 <h2 id="5-parametric-construction-kit">5. Parametric construction kit</h2>
 
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce bibendum neque eget nunc mattis eu sollicitudin enim tincidunt.</p>
+<h3 id="attempt-1">Attempt 1</h3>
+
+<p>I decided to test a geometric shape and add some teeth. I created two circles, and rotationally repeated a slot. The slot size and repeat values are parametrically determined. After boolean diffing I ended up with croissant puzzle pieces.</p>
+
+<p><img src="../images/week2/croissant.jpg" alt="croissant-construction" /></p>
+
+<p>Cardboard croissants baking in the laser oven:
+<img src="../images/week2/baking.jpg" alt="croissant-baking" /></p>
+
+<p>The <em>best cutting values</em> derived from the day before were no longer sufficient to cut through the cardboard. Cutter was tired and needed to be brought down from <code class="language-plaintext highlighter-rouge">18%</code> to <code class="language-plaintext highlighter-rouge">10%</code> speed.</p>
+
+<p>Completed:
+<img src="../images/week2/baked.jpg" alt="croissant-baked" /></p>
+
+<p>Croissant sculptures:
+<img src="../images/week2/croissant-sculptures.jpg" alt="croissant-sculptures" /></p>
+
+<p>I had wanted to turn the rightmost sculpture into a complete sphere, but the croissants were too curved to do that without warping the cardboard.</p>
+
+<h3 id="attempt-2">Attempt 2</h3>
 
 <h1 id="resources">Resources</h1>
 
@@ -267,7 +291,7 @@ The commit must have a message</p>
 			<div class="row">
 				<div class="col-sm-6">
 					
-						<a href="../" class="site-footer__logo">
+						<a href="https://www.oliviaseow.com" class="site-footer__logo">
 							<img src="../site-theme/assets/images/layout/logo-footer.png">
 						</a><!-- /.site-footer__logo -->
 					
