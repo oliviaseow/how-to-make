@@ -6,12 +6,21 @@
 <meta name="viewport" content="width=device-width, minimum-scale=1.0">
 <title>Week 3</title>
 
-	<meta name="description" content="Page description">
+	<meta name="description" content="Electronics production">
 
 
 <link rel="icon" href="../favicon.ico" type="image/x-icon">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,500,500i,700,700i|Noto+Sans:400,400i,700,700i|Source+Code+Pro&amp;subset=latin-ext">
 <link rel="stylesheet" href="../site-theme/assets/css/style.css">
+
+ <!-- for mathjax support -->
+ 
+ <script type="text/x-mathjax-config">
+   MathJax.Hub.Config({
+   TeX: { equationNumbers: { autoNumber: "AMS" } }
+   });
+ </script>
+ <script type="text/javascript" async src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
 	</head>
 	<body class="red" data-spy="scroll" data-target=".js-scrollspy">
@@ -65,7 +74,7 @@
 									<h1 class="hero-subheader__title">Week 3</h1>
 								
 								
-									<p class="hero-subheader__desc">Page description</p>
+									<p class="hero-subheader__desc">Electronics production</p>
 								
 								
 									
@@ -93,7 +102,119 @@
 				<div class="row">
 					<div class="col-md-7">
 						<div class="content">
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce bibendum neque eget nunc mattis eu sollicitudin enim tincidunt. Vestibulum lacus tortor, ultricies id dignissim ac, bibendum in velit.</p>
+							<h1 id="assignments">Assignments</h1>
+
+<ol>
+  <li>Characterize your PCB production process <a href="#1-pcb-production-process"><i class="icon icon--chevron-down"></i></a></li>
+  <li>Make an in-circuit programmer that includes a microcontroller <a href="#2-in-circuit-programmer"><i class="icon icon--chevron-down"></i></a></li>
+  <li>Test other PCB processes <a href="#3-pcb-fun"><i class="icon icon--chevron-down"></i></a></li>
+</ol>
+
+<h1 id="1-pcb-production-process">1. PCB production process</h1>
+
+<p>We got trained on the Roland SRM-20 and the <em>Other</em> mill. For both machines, a <code class="language-plaintext highlighter-rouge">1/64"</code> bit is used for traces while a <code class="language-plaintext highlighter-rouge">1/32"</code> bit for cutting. EECS section’s line test using the Roland machine yielded the following results:</p>
+
+<p><img src="../images/week3/testmill.jpg" alt="line test" />.</p>
+
+<p>The smallest width mods will attempt to mill out is about <code class="language-plaintext highlighter-rouge">0.016"</code> (<code class="language-plaintext highlighter-rouge">0.4064mm</code>), although traces can be <code class="language-plaintext highlighter-rouge">0.001"</code> wide. The traces on the Roland machine look neater than that from the <em>Other</em> mill.</p>
+
+<h2 id="pcb-milling-steps">PCB milling steps</h2>
+
+<p>Preparation: firmly mount a sacrificial board into the machine, followed by a copper board with double sided tape.</p>
+
+<ol>
+  <li>Prepare a black-and-white png file at 1000 dpi. The mill cuts from white to black, so traces should be in white, whereas parts to be milled away in black. Doing the opposite will cause traces to be thinner by the width of the bit. <a href="https://mods.cba.mit.edu/">Mods</a> can invert the colors if the file is wrong.</li>
+  <li>Upload the png into <a href="https://mods.cba.mit.edu/">mods</a> and choose the right server program, in my case Roland &gt; mill &gt; SRM-20 &gt; PCB png.</li>
+  <li>To mill traces, select <code class="language-plaintext highlighter-rouge">mill traces (1/64)</code>.</li>
+  <li>Press <code class="language-plaintext highlighter-rouge">calculate</code>. Check that paths are correct. The system can be <em>tricked</em> into milling thinner gaps by decreasing the tool diameter in mods. It is probably better to fix the source file if you don’t want scraggly lines.</li>
+  <li>Load the corresponding bit high into the collet and calibrate the origin (<code class="language-plaintext highlighter-rouge">x</code> and <code class="language-plaintext highlighter-rouge">y</code> only, leave <code class="language-plaintext highlighter-rouge">z</code> at <code class="language-plaintext highlighter-rouge">10</code>) using the button <code class="language-plaintext highlighter-rouge">move to origin</code>. This corresponds to the bottom left corner of the file.</li>
+  <li>Loosen the bit and carefully lower it so it touches the pcb. Tighten it again, but not too aggressively.</li>
+  <li>Click <code class="language-plaintext highlighter-rouge">return to home</code>.</li>
+  <li>Select <code class="language-plaintext highlighter-rouge">/dev/usb/ip1</code> as the device.</li>
+  <li>If <code class="language-plaintext highlighter-rouge">send file to printer</code> is not in <strong>boldface</strong>, press calculate again. Then send file to printer.</li>
+  <li>To mill outlines and holes, select <code class="language-plaintext highlighter-rouge">mill outlines (1/32)</code> and repeat steps 4 - 9.</li>
+  <li>Use a flat nose screwdriver to remove the PCB from the machine. Remove the bits or move them high into the collet.</li>
+  <li>Gently sand away burs, wash, and inspect the PCB for errors.</li>
+</ol>
+
+<p>The machine in EDS is a little temperamental, and may need to be restarted several times if it does not respond to print files (apparently the door sensor is faulty).</p>
+
+<h1 id="2-in-circuit-programmer">2. In-circuit programmer</h1>
+
+<p>I made <a href="https://github.com/ataradov/free-dap">Free-DAP</a>, a CMSIS-DAP debugger/programmer for JTAG. The files are <a href="https://academy.cba.mit.edu/classes/embedded_programming">here</a> (see <em>hello.CMSIS-DAP.10.D11C</em>).</p>
+
+<p>After milling the board, I soldered cautiously and was thankfully able to get it programmed with the Atmel firmware right away.</p>
+
+<p><img src="../images/week3/soldering-collage.jpg" alt="soldering collage" /></p>
+
+<p>Not pictured above is two layers of scrap vinyl under the USB end, to help it fit more snugly into ports.</p>
+
+<h1 id="3-pcb-fun">3. PCB fun</h1>
+
+<h2 id="the-idea">The idea</h2>
+
+<p>I wanted to make a passive PCB board, and thought about creating NFC powered LEDS in Van Gogh’s Starry Night sky. The clouds kind of already look like antennae, and I decided to make them so.</p>
+
+<p>Having seen <a href="https://www.youtube.com/watch?v=EUTLZD3rR_A">Lumi Deco Nails</a> (and their <a href="https://www.adafruit.com/product/3781">dull cousins from Adafruit</a>), I know it is possible to power LEDs attached to <em>teeeeny</em> antenna with 13.56MHz NFC fields, but I still needed to find a way to design my own. The commercial circuits appear to have tuning capacitors, but I wanted to use the LED’s <a href="https://www.edn.com/an-leds-intrinsic-capacitance-works-in-a-650-mv-lrc-circuit/">intrinsic capacitance</a> for my circuit.</p>
+
+<h2 id="planning-the-circuit">Planning the circuit</h2>
+
+<p>The circuit I used has just two components, an LED and an antenna.</p>
+
+<p><img src="../images/week3/circuit.jpg" alt="circuit" /></p>
+
+<p>The antenna behaves like an inductor \(L_{antenna}\), and has a small resistance \(R_{antenna}\). The LED also has a resistance \(R_{led}\) and an intrinsic capacitance \(C_{led}\). Together, they behave like a series <a href="https://en.wikipedia.org/wiki/RLC_circuit">RLC circuit</a>, from which there is a resonant frequency \(f = \frac{1}{2 \pi \sqrt{LC}}\). My <a href="https://en.wikipedia.org/wiki/Near-field_communication#Design">phone</a> emits a field at \(f\) = <code class="language-plaintext highlighter-rouge">13.56MHz</code>. The LEDs I have from CO-RODE KIT do not have a searchable datasheet, but I used a web-referenced benchmark of <code class="language-plaintext highlighter-rouge">50pF</code>. Solving for \(L\), we need to approach a target inductance of <code class="language-plaintext highlighter-rouge">2.75μH</code> in the antenna so that the LED can receive a strong power from NFC.</p>
+
+<p>When exposed to an NFC field, voltage is induced in the antenna, powering the LED. At resonant frequency, the total impedance reaches its minimum value. The current in the antenna and energy transferred to the LED would be optimized.</p>
+
+<p>Regular geometry antenna (e.g. spiral, rectangle) are easier for calculation. For an <a href="https://vtechworks.lib.vt.edu/bitstream/handle/10919/25963/Caswell_etd_Ch2.pdf">Archimedean spiral antenna</a>, inductance (in Henry) can be found by:</p>
+
+\[L_{antenna} = 31.33 \times 4 \pi \times 10^{-7} \times N^2 \times \frac{a^2}{8a + 11c}\]
+
+<p>where \(a\) is the average of inner and outer radii (in meters), \(c\) is the absolute difference between outer and inner radii (in meters), and N is the number of turns. I made this <a href="https://docs.google.com/spreadsheets/d/1UqrKrnr8A7-Gy0vgW5UhWuvfHYIpk11LG7yt0-ZQaYc/edit?usp=sharing">spreadsheet</a> to calculate how many turns I needed to approach the target inductance as closely as possible (i.e. <code class="language-plaintext highlighter-rouge">Ratio</code> = 1). My designs are inoptimal but still transmit enough power to light the LED.</p>
+
+<iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQuBaemwcvOtqmOLhoMoeMTEyzQAktnHz9eVycPGcWHI_nzhIVTaEYxCkkOIF_On_g7ndghI71G-z29/pubhtml?gid=0&amp;single=true&amp;widget=true&amp;headers=false" width="100%" height="260px"></iframe>
+
+<h2 id="creating-the-design">Creating the design</h2>
+
+<p>Following the aforementioned <a href="#1-pcb-production-process">line test</a>, I tried to create a spiral with a <code class="language-plaintext highlighter-rouge">0.4mm</code> line width. However, <a href="https://mods.cba.mit.edu/">mods</a> was not terribly pleased and threw up a practically blank mill path. This was because some of the gaps turned out smaller in my design - Anthony pointed out that reducing the “tool diameter” by <code class="language-plaintext highlighter-rouge">0.001"</code> tricks mods into milling the lines regardless. I decided to try my luck and mill it anyway. The lines came out a tad fuzzy, but I was thrilled to find that it worked 🔥</p>
+
+<p>Commercial NFC tags are usually multi-layer PCB or wire coils, so making a single-layer substitute was a little tricky. I ended up milling holes at the ends of the antenna and, created <em>legs</em> for SMD LEDs to turn them into “through hole” components for testing.</p>
+
+<p><img src="../images/week3/antenna.jpg" alt="antenna" /></p>
+
+<p>Low current / voltage probably LEDs would work best, but the ones I have do not have data sheets, so I milled a couple more (now properly sized) antennas to test it out. I am de<em>lighted</em> that they all worked!</p>
+
+<video width="630" poster="../images/week3/VanGogh.jpg" muted="" autoplay="" loop="" controls="">
+        <source src="../images/week3/prototypes.mp4" />
+        <p class="warning">Your browser does not support HTML5 video.</p>
+</video>
+
+<p>I used Inkscape, Illustrator, and PhotoShop to start, and I keen on creating a JavaScript generator to create the spirals more easily. The bonus of this approach is that you can use <code class="language-plaintext highlighter-rouge">angle</code> to make cool Archimedean patterns, keeping in mind that for antenna, lines should not intersect.</p>
+
+<div class="glitch-embed-wrap" style="height: 420px; width: 100%;">
+  <iframe src="https://glitch.com/embed/#!/embed/spiralizer?path=script.js&amp;previewSize=100" title="spiralizer on Glitch" allow="geolocation; microphone; camera; midi; vr; encrypted-media" style="height: 100%; width: 100%; border: 0;">
+  </iframe>
+</div>
+
+<h2 id="coming-together-">Coming together ✨</h2>
+
+<video width="630" poster="../images/week3/VanGogh.jpg" muted="" autoplay="" loop="" controls="">
+        <source src="../images/week3/VanGoghNFC.mp4" />
+        <p class="warning">Your browser does not support HTML5 video.</p>
+</video>
+
+<p>I like how it changes under different lighting conditions 💡
+<img src="../images/week3/lighting.jpg" alt="circuit" /></p>
+
+<h2 id="future-improvements">Future improvements</h2>
+<ul>
+  <li>I want to make the antennas better disguised among the clouds. I’ve tried this hand-drawn antenna with a split spiral (to facilitate surface-mount LEDs), but I am still trying to improve it.</li>
+  <li>The LEDs could perhaps be brighter with some spectrum analysis and optimization of stray capacitance.</li>
+  <li>The active emission area of a phone’s NFC field is quite narrow, it might be nice to have a bigger surface area.</li>
+</ul>
+
+<p>This being said, I was initially skeptical that I could even make this work, and this exercise has given me some confidence that I can trust the science :p</p>
 
 						</div><!-- /.content -->
 					</div><!-- /.col -->
