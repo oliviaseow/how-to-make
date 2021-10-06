@@ -6,12 +6,14 @@
 <meta name="viewport" content="width=device-width, minimum-scale=1.0">
 <title>Week 4</title>
 
-	<meta name="description" content="Page description">
+	<meta name="description" content="3D scanning and printing">
 
 
 <link rel="icon" href="../favicon.ico" type="image/x-icon">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,500,500i,700,700i|Noto+Sans:400,400i,700,700i|Source+Code+Pro&amp;subset=latin-ext">
 <link rel="stylesheet" href="../site-theme/assets/css/style.css">
+
+ <!-- for mathjax support -->
 
 	</head>
 	<body class="red" data-spy="scroll" data-target=".js-scrollspy">
@@ -65,7 +67,7 @@
 									<h1 class="hero-subheader__title">Week 4</h1>
 								
 								
-									<p class="hero-subheader__desc">Page description</p>
+									<p class="hero-subheader__desc">3D scanning and printing</p>
 								
 								
 									
@@ -93,7 +95,101 @@
 				<div class="row">
 					<div class="col-md-7">
 						<div class="content">
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce bibendum neque eget nunc mattis eu sollicitudin enim tincidunt. Vestibulum lacus tortor, ultricies id dignissim ac, bibendum in velit.</p>
+							<script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+
+<style>
+model-viewer {
+  width: 800px;
+  height: 600px;
+}
+</style>
+
+<p>During training on the Prusa, Anthony mentioned that the EECS section machine comes with different <a href="https://shop.prusa3d.com/en/accessories-mk3s-mk25s-mini/214-powder-coated-spring-steel-sheet.html">build plates</a> for use with various materials. The side effect is that 3D prints get embossed with the texture of the build plate. This got me thinking that we might be able to give 3D prints interesting optical properties this way.</p>
+
+<p>I vaguely recall seen a documentary about how the brilliant blue on the top surface of a morpho butterfly’s wing is not due to any naturally occuring pigment (there is none), but rather microscopic holes that bend light in a particular way, and that scientists have been trying to recreate this effect using nanometer holes, such as on Australian notes.</p>
+
+<p><img src="https://cdn.shopify.com/s/files/1/0579/4267/1553/files/amazing_41658921-ad07-409f-8452-a1ba698ad8b7_480x480.jpg?v=1625901561" alt="morpho butterfly" /></p>
+
+<p>I also remember <a href="https://www.youtube.com/watch?v=-x-n0jkbc3k">this Youtube video</a> creating holographic chocolates, and was curious if 3D prints might have the same behavior, being that both materials are molten as they touch the “mold” surface.</p>
+
+<p>I wanted to 3D print some butterflies and test my theory. Sadly however I was devoid of diffraction grating sheets, and went “dumpster diving” through unwanted things from the lab. There, I chanced upon a small stack of shiny holographic CDs.</p>
+
+<blockquote>
+  <p>Although a CD is not really a diffraction grating, after all the light bounces off of the CD, it does not pass through it, the CD acts like a diffraction grating because the reflected light undergoes constructive and destructive interference due to the special geometry of the CD’s bottom surface.</p>
+
+  <p>- <a class="blockquote_link" href="http://www.physics.smu.edu/kehoe/1301S06/cd_diff.pdf"><i>SMU Physics</i></a></p>
+</blockquote>
+
+<p>I decided to try 3D printing on a CD.</p>
+
+<p>My first step was to design a butterfly. I cadded the outline and extruded it. Since the butterfly needs to be printed upside down laying flush on a surface, I designed a living hinge that could be used to bend the butterfly after printing.</p>
+
+<p><img src="../images/week4/living-hinge.jpg" alt="living hinge" /></p>
+
+<p>The first challenge I ran into was that the Prusa is magnetically (and automatically) calibrated before each print, which creates a challenge for printing on an unusual surface. To circumvent this problem, I added a <code class="language-plaintext highlighter-rouge">1.2mm</code> nub in my design that was connected to the build plate, and translated the butterfly upwards by the same <code class="language-plaintext highlighter-rouge">1.2mm</code> (the thickness of the CD).</p>
+
+<p>I found that the best way to remove the paint from the CD is to scratch it at several spots with a blade, and then use duck tape to rip out chunks at a time. I then wipe it with a microfiber cloth as finger prints will transfer to 3D prints.</p>
+
+<p><img src="../images/week4/duck-tape.jpg" alt="duck tape" /></p>
+
+<p>Albeit with some alignment issues, my first test translating holo from a CD to a 3D print worked!</p>
+
+<p><img src="../images/week4/alignment.jpg" alt="alignment" /></p>
+
+<video width="630" poster="../images/week3/VanGogh.jpg" muted="" autoplay="" loop="" controls="">
+        <source src="../images/week4/cd-trial.mp4" />
+        <p class="warning">Your browser does not support HTML5 video.</p>
+</video>
+
+<p>The microscopes available do not have the resolution to see anything interesting on the prints, but <a href="https://zfredin.pages.cba.mit.edu/home/">Zach</a> mentioned that we could try with something more powerful in the future.</p>
+
+<p>Emboldened by this trial, I decided to make moar CD butterflies.</p>
+
+<video width="630" poster="../images/week3/VanGogh.jpg" muted="" autoplay="" loop="" controls="">
+        <source src="../images/week4/cd-butterfly.mp4" />
+        <p class="warning">Your browser does not support HTML5 video.</p>
+</video>
+
+<p>I wanted my butterflies to be black. Unfortunately, the black filament was ABS and had a much higher print temperature (<code class="language-plaintext highlighter-rouge">100°C</code>) than the PLA (<code class="language-plaintext highlighter-rouge">60°C</code>), and so entirely fused to the CD.</p>
+
+<p>Undefeated, I acquired some diffraction grating sheets from Amazon and continued my trial with different filament (left: black, right: translucent).</p>
+
+<video width="630" poster="../images/week3/VanGogh.jpg" muted="" autoplay="" loop="" controls="">
+        <source src="../images/week4/colors.mp4" />
+        <p class="warning">Your browser does not support HTML5 video.</p>
+</video>
+
+<p>As suspected, the patterns on black material appeared best on camera, although the translucent butterfly is pretty cool in person too.</p>
+
+<p>I also experimented with incorporating diffraction grating sheet and tracing paper as one of the layers during 3D printing. This also turned out pretty cool!</p>
+
+<video width="630" poster="../images/week3/VanGogh.jpg" muted="" autoplay="" loop="" controls="">
+        <source src="../images/week4/paper.mp4" />
+        <p class="warning">Your browser does not support HTML5 video.</p>
+</video>
+
+<p>I wanted to print butterflies on beautiful flowy tulle, but short of finding some I mounted them on the next best option - chicken wire!</p>
+
+<video width="630" poster="../images/week3/VanGogh.jpg" muted="" autoplay="" loop="" controls="">
+        <source src="../images/week4/chicken-wire.mp4" />
+        <p class="warning">Your browser does not support HTML5 video.</p>
+</video>
+
+<p>The butterflies have a nub on the bottom for easy mounting, but I wasn’t able to 3D print a press-fit stud that worked, so I used some hot glue (which interestingly made the butterflies “flap” when applied to the joint).</p>
+
+<p>I attempted to 3D print my own defeXtile, but the print took too long. <a href="https://tangible.media.mit.edu/person/jack-forman">Jack</a> very kindly donated an old test, which I was able to 3D print directly on top of my pausing the print midway, adding the material, and then continuing to print on top.</p>
+
+<video width="630" poster="../images/week3/VanGogh.jpg" muted="" autoplay="" loop="" controls="">
+        <source src="../images/week4/tulle.mp4" />
+        <p class="warning">Your browser does not support HTML5 video.</p>
+</video>
+
+<p>Interactive 3D model viewer (zoom, drag, and pan):</p>
+<model-viewer src="../images/week4/butterfly-lace.glb" alt="butterfly lace model" ar="" ar-modes="webxr scene-viewer quick-look" environment-image="neutral" auto-rotate="" camera-controls=""></model-viewer>
+
+<p>I am really excited about this method. The 3D prints came out very smooth, and we can also use layering to make it smooth on opposing sides. I am curious to try more detailed holographic patterns as well, such as:</p>
+
+<p><img src="https://media-exp1.licdn.com/dms/image/C4E1BAQGQb-z2Ya1GkQ/company-background_10000/0/1585547151183?e=2159024400&amp;v=beta&amp;t=hPaJa5H-JtXrkaTawCeliRpd6GRNH26MnJ9r4j3q8M8" alt="morphotonix holo" /></p>
 
 						</div><!-- /.content -->
 					</div><!-- /.col -->
