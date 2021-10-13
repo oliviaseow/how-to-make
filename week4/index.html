@@ -104,6 +104,16 @@ model-viewer {
 }
 </style>
 
+<h1 id="assignments">Assignments</h1>
+
+<ol>
+  <li>Design and 3D print <a href="#1-3d-design"><i class="icon icon--chevron-down"></i></a></li>
+  <li>3D scan <a href="#2-3d-scan"><i class="icon icon--chevron-down"></i></a></li>
+  <li>3D printer characterization <a href="#3-3d-printer-characterization"><i class="icon icon--chevron-down"></i></a></li>
+</ol>
+
+<h1 id="1-3d-design">1. 3D design</h1>
+
 <p>During training on the Prusa, Anthony mentioned that the EECS section machine comes with different <a href="https://shop.prusa3d.com/en/accessories-mk3s-mk25s-mini/214-powder-coated-spring-steel-sheet.html">build plates</a> for use with various materials. The side effect is that 3D prints get embossed with the texture of the build plate. This got me thinking that we might be able to give 3D prints interesting optical properties this way.</p>
 
 <p>I vaguely recall seen a documentary about how the brilliant blue on the top surface of a morpho butterfly’s wing is not due to any naturally occuring pigment (there is none), but rather microscopic holes that bend light in a particular way, and that scientists have been trying to recreate this effect using nanometer holes, such as on Australian notes.</p>
@@ -181,12 +191,9 @@ model-viewer {
 
 <p>I wanted to print butterflies on beautiful flowy tulle, but short of finding some I mounted them on the next best option - chicken wire!</p>
 
-<video width="630" poster="../images/week3/VanGogh.jpg" muted="" autoplay="" loop="" controls="">
-        <source src="../images/week4/chicken-wire.mp4" />
-        <p class="warning">Your browser does not support HTML5 video.</p>
-</video>
-
 <iframe width="560" height="315" src="https://www.youtube.com/embed/UNd2NQlHOhc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+
+<p>A compressed and sped up version of the video can be found on GitLab <a href="../images/week4/chicken-wire.mp4">here</a>.</p>
 
 <p>The butterflies have a nub on the bottom for easy mounting, but I wasn’t able to 3D print a press-fit stud that worked, so I used some hot glue (which interestingly made the butterflies “flap” when applied to the joint).</p>
 
@@ -204,9 +211,35 @@ model-viewer {
 
 <p><img src="https://media-exp1.licdn.com/dms/image/C4E1BAQGQb-z2Ya1GkQ/company-background_10000/0/1585547151183?e=2159024400&amp;v=beta&amp;t=hPaJa5H-JtXrkaTawCeliRpd6GRNH26MnJ9r4j3q8M8" alt="morphotonix holo" /></p>
 
+<h1 id="2-3d-scan">2. 3D scan</h1>
+
 <p>For my scan, I scanned a pusheen stuffed toy and made a site to view it in AR and scribble around it: <a href="https://olivia-s.glitch.me">olivia-s.glitch.me</a>.</p>
 
 <model-viewer src="../images/week4/pusheen.glb" alt="pusheen model" ar="" ar-modes="webxr scene-viewer quick-look" environment-image="neutral" auto-rotate="" camera-controls=""></model-viewer>
+
+<h1 id="3-3d-printer-characterization">3. 3D printer characterization</h1>
+
+<p>The EECS section characterized Prusa and Sindoh machines. The photos are available in our group folder. More details can be found on our group page, and a summary of my learning is as follows:</p>
+
+<h2 id="overhang">Overhang</h2>
+
+<p>Both printers could print at <code class="language-plaintext highlighter-rouge">40ish</code> degrees with no issues. Angles smaller than that risk instability. The threshold for unsupported overhangs on both printers was <code class="language-plaintext highlighter-rouge">0.1mm</code>.</p>
+
+<h2 id="support-clearance">Support clearance</h2>
+
+<p>A gap of <code class="language-plaintext highlighter-rouge">0.6</code> was most ideal for support clearance.</p>
+
+<h2 id="unsupported-bridging">Unsupported bridging</h2>
+
+<p>The PLA material started to sag at around <code class="language-plaintext highlighter-rouge">15mm</code>.</p>
+
+<h2 id="wall-thickness-and-dimensions">Wall thickness and dimensions</h2>
+
+<p>The minimum print resolution was <code class="language-plaintext highlighter-rouge">0.5mm</code>. The cubes were off by up to <code class="language-plaintext highlighter-rouge">0.02mm</code> for a single solid wall.</p>
+
+<h2 id="anisotropy">Anisotropy</h2>
+
+<p>Anisotropy was observed on both printers, making prints susceptible to shearing if filament is placed in a regular way along stress lines.</p>
 
 						</div><!-- /.content -->
 					</div><!-- /.col -->
