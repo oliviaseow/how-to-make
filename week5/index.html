@@ -6,12 +6,14 @@
 <meta name="viewport" content="width=device-width, minimum-scale=1.0">
 <title>Week 5</title>
 
-	<meta name="description" content="Page description">
+	<meta name="description" content="Electronics design">
 
 
 <link rel="icon" href="../favicon.ico" type="image/x-icon">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,500,500i,700,700i|Noto+Sans:400,400i,700,700i|Source+Code+Pro&amp;subset=latin-ext">
 <link rel="stylesheet" href="../site-theme/assets/css/style.css">
+
+ <!-- for mathjax support -->
 
 	</head>
 	<body class="red" data-spy="scroll" data-target=".js-scrollspy">
@@ -65,7 +67,7 @@
 									<h1 class="hero-subheader__title">Week 5</h1>
 								
 								
-									<p class="hero-subheader__desc">Page description</p>
+									<p class="hero-subheader__desc">Electronics design</p>
 								
 								
 									
@@ -93,7 +95,67 @@
 				<div class="row">
 					<div class="col-md-7">
 						<div class="content">
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce bibendum neque eget nunc mattis eu sollicitudin enim tincidunt. Vestibulum lacus tortor, ultricies id dignissim ac, bibendum in velit.</p>
+							<h1 id="assignments">Assignments</h1>
+
+<ol>
+  <li>PCB board hello world <a href="#1-hello-world-board"><i class="icon icon--chevron-down"></i></a></li>
+  <li>Observe the operation of the board <a href="#2-pcb-observations"><i class="icon icon--chevron-down"></i></a></li>
+</ol>
+
+<h1 id="1-hello-world-board">1. Hello world board</h1>
+
+<p>I made the SAMD11C echo 10 pin board.</p>
+
+<p>In KiCad’s Schematic Layout Editor, I first laid out the components from <a href="http://academy.cba.mit.edu/classes/embedded_programming/index.html#echo">here</a> (see <em>D11C-echo-10 pin</em>), adding an LED (with a 1kΩ current limiting resistor) and button.</p>
+
+<p><img src="../images/week5/schematic.jpg" alt="schematic" /></p>
+
+<p>Then, in the PCB Layout Editor, I wired up the components. I made a mistake wiring D+ and D- (left image), which is reflected in my milled design. The corrected layout is shown in the right image, with an additional 0Ω bridge resistor. IRL I fixed my PCB with some jumper wires.</p>
+
+<p><img src="../images/week5/pcb.jpg" alt="pcb" /></p>
+
+<p>I exported the layout as an SVG and used the pen tool to draw a stretching KiTTYCad around it.</p>
+
+<p><img src="../images/week5/kitty.jpg" alt="kitty" /></p>
+
+<p>The design is inspired by the Singapura cat, which are known for their blunt, stubby tails. My design has the LED in the tail of the cat :3</p>
+
+<p><img src="../images/week5/sgcat.jpg" alt="sgcat" /></p>
+
+<p>I milled the board on the Roland SRM-20, following <a href="../week3/#pcb-milling-steps">these steps</a>, except I chose the svg program. Weirdly, mods made the svg was slightly smaller than the actual svg file the first time round, so I had to redo the board at 71.98 units.</p>
+
+<p><img src="../images/week5/cat-mill.jpg" alt="cat milling" /></p>
+
+<p>The board was a little curved in the milling machine, resulting in the bit going in to the board deeper than expected. It was still okay in this instance since it did not make any traces too thin or peel away.</p>
+
+<p>I soldered on the components, using Kapton tape to mask the board along the way. I also layered ~1mm of vinyl under the USB end of the board.</p>
+
+<p>Sadly, my board did not work at first go, and Anthony expertly diagnosed that the regulator was not working as expected to convert 5V to 3.3V. There could have been a problem with the component, or perhaps a different regulator got mixed into the drawer.</p>
+
+<p>After fixing the issues, my board worked and I managed to upload some code to make the LED blink. Yay!</p>
+
+<video width="630" poster="../images/week2/soundscape_white.jpg" muted="" autoplay="" loop="" controls="">
+        <source src="../images/week5/blinky.mp4" />
+        <p class="warning">Your browser does not support HTML5 video.</p>
+</video>
+
+<h1 id="2-pcb-observations">2. PCB observations</h1>
+
+<p>Matt and I used to oscilloscope to observe the signal in the LED, which had a frequency of 5Hz at ~3.3V.</p>
+
+<video width="630" poster="../images/week2/soundscape_white.jpg" muted="" autoplay="" loop="" controls="">
+        <source src="../images/week5/oscilloscope.mp4" />
+        <p class="warning">Your browser does not support HTML5 video.</p>
+</video>
+<p><br />
+We also attempted to observe the usb 2.0 handshake across the D+ and D- pins and ground.</p>
+
+<h1 id="resources">Resources</h1>
+<ul>
+  <li><a href="https://vimeo.com/625848785/cbcd8b5d3e">Kicad recitation</a></li>
+  <li><a href="https://fabacademy.org/2020/labs/ulb/students/quentin-bolsee/projects/samd11c_uart-updi/">SAMD11C tutorial</a></li>
+  <li><a href="https://github.com/mattairtech/ArduinoCore-samd">Arduino library for SAMD11C</a></li>
+</ul>
 
 						</div><!-- /.content -->
 					</div><!-- /.col -->
