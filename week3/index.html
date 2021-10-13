@@ -14,13 +14,13 @@
 <link rel="stylesheet" href="../site-theme/assets/css/style.css">
 
  <!-- for mathjax support -->
- 
- <script type="text/x-mathjax-config">
-   MathJax.Hub.Config({
-   TeX: { equationNumbers: { autoNumber: "AMS" } }
-   });
- </script>
- <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+	<script type="text/x-mathjax-config">
+	MathJax.Hub.Config({
+	TeX: { equationNumbers: { autoNumber: "AMS" } }
+	});
+	</script>
+	<script type="text/javascript" async src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
 	</head>
 	<body class="red" data-spy="scroll" data-target=".js-scrollspy">
@@ -112,7 +112,7 @@
 
 <h1 id="1-pcb-production-process">1. PCB production process</h1>
 
-<p>We got trained on the Roland SRM-20 and the <em>Other</em> mill. For both machines, a <code class="language-plaintext highlighter-rouge">1/64"</code> bit is used for traces while a <code class="language-plaintext highlighter-rouge">1/32"</code> bit for cutting. EECS section’s line test using the Roland machine yielded the following results:</p>
+<p>We got trained on the Roland SRM-20 and the <em>Other</em> mill. For both machines, a <code class="language-plaintext highlighter-rouge">1/64"</code> end mill is used for traces while a <code class="language-plaintext highlighter-rouge">1/32"</code> end mill for cutting. EECS section’s line test using the Roland machine yielded the following results:</p>
 
 <p><img src="../images/week3/testmill.jpg" alt="line test" />.</p>
 
@@ -123,17 +123,17 @@
 <p>Preparation: firmly mount a sacrificial board into the machine, followed by a copper board with double sided tape.</p>
 
 <ol>
-  <li>Prepare a black-and-white png file at 1000 dpi. The mill cuts from white to black, so traces should be in white, whereas parts to be milled away in black. Doing the opposite will cause traces to be thinner by the width of the bit. <a href="https://mods.cba.mit.edu/">Mods</a> can invert the colors if the file is wrong.</li>
+  <li>Prepare a black-and-white png file at 1000 dpi. The mill cuts from white to black, so traces should be in white, whereas parts to be milled away in black. Doing the opposite will cause traces to be thinner by the width of the end mill. <a href="https://mods.cba.mit.edu/">Mods</a> can invert the colors if the file is wrong.</li>
   <li>Upload the png into <a href="https://mods.cba.mit.edu/">mods</a> and choose the right server program, in my case Roland &gt; mill &gt; SRM-20 &gt; PCB png.</li>
   <li>To mill traces, select <code class="language-plaintext highlighter-rouge">mill traces (1/64)</code>.</li>
   <li>Press <code class="language-plaintext highlighter-rouge">calculate</code>. Check that paths are correct. The system can be <em>tricked</em> into milling thinner gaps by decreasing the tool diameter in mods. It is probably better to fix the source file if you don’t want scraggly lines.</li>
-  <li>Load the corresponding bit high into the collet and calibrate the origin (<code class="language-plaintext highlighter-rouge">x</code> and <code class="language-plaintext highlighter-rouge">y</code> only, leave <code class="language-plaintext highlighter-rouge">z</code> at <code class="language-plaintext highlighter-rouge">10</code>) using the button <code class="language-plaintext highlighter-rouge">move to origin</code>. This corresponds to the bottom left corner of the file.</li>
-  <li>Loosen the bit and carefully lower it so it touches the pcb. Tighten it again, but not too aggressively.</li>
+  <li>Load the corresponding end mill high into the collet and calibrate the origin (<code class="language-plaintext highlighter-rouge">x</code> and <code class="language-plaintext highlighter-rouge">y</code> only, leave <code class="language-plaintext highlighter-rouge">z</code> at <code class="language-plaintext highlighter-rouge">10</code>) using the button <code class="language-plaintext highlighter-rouge">move to origin</code>. This corresponds to the bottom left corner of the file.</li>
+  <li>Loosen the end mill and carefully lower it so it touches the pcb. Tighten it again, but not too aggressively.</li>
   <li>Click <code class="language-plaintext highlighter-rouge">return to home</code>.</li>
   <li>Select <code class="language-plaintext highlighter-rouge">/dev/usb/ip1</code> as the device.</li>
   <li>If <code class="language-plaintext highlighter-rouge">send file to printer</code> is not in <strong>boldface</strong>, press calculate again. Then send file to printer.</li>
   <li>To mill outlines and holes, select <code class="language-plaintext highlighter-rouge">mill outlines (1/32)</code> and repeat steps 4 - 9.</li>
-  <li>Use a flat nose screwdriver to remove the PCB from the machine. Remove the bits or move them high into the collet.</li>
+  <li>Use a flat nose screwdriver to remove the PCB from the machine. Remove the end mills or move them high into the collet.</li>
   <li>Gently sand away burs, wash, and inspect the PCB for errors.</li>
 </ol>
 
@@ -181,7 +181,7 @@
 
 <p>Commercial NFC tags are usually multi-layer PCB or wire coils, so making a single-layer substitute was a little tricky. I ended up milling holes at the ends of the antenna and, created <em>legs</em> for SMD LEDs to turn them into “through hole” components for testing.</p>
 
-<p><img src="../images/week3/antenna.JPG" alt="antenna" /></p>
+<p><img src="../images/week3/antenna.jpg" alt="antenna" /></p>
 
 <p>Low current / voltage probably LEDs would work best, but the ones I have do not have data sheets, so I milled a couple more (now properly sized) antennas to test it out. I am de<em>lighted</em> that they all worked!</p>
 
