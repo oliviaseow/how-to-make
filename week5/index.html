@@ -95,7 +95,9 @@
 				<div class="row">
 					<div class="col-md-7">
 						<div class="content">
-							<h1 id="assignments">Assignments</h1>
+							<p align="right"><sub><sup>Oct 6, 2021</sup></sub></p>
+
+<h1 id="assignments">Assignments</h1>
 
 <ol>
   <li>PCB board hello world <a href="#1-hello-world-board"><i class="icon icon--chevron-down"></i></a></li>
@@ -114,6 +116,13 @@
 
 <p><img src="../images/week5/pcb.jpg" alt="pcb" /></p>
 
+<p>3D view from KiCad:</p>
+
+<video width="630" poster="../images/week5/pcb.jpg" muted="" autoplay="" loop="" controls="">
+        <source src="../images/week5/3dpcb.mp4" />
+        <p class="warning">Your browser does not support HTML5 video.</p>
+</video>
+
 <p>I exported the layout as an SVG and used the pen tool to draw a stretching KiTTYCad around it.</p>
 
 <p><img src="../images/week5/kitty.jpg" alt="kitty" /></p>
@@ -126,24 +135,52 @@
 
 <p><img src="../images/week5/cat-mill.jpg" alt="cat milling" /></p>
 
-<p>The board was a little curved in the milling machine, resulting in the bit going in to the board deeper than expected. It was still okay in this instance since it did not make any traces too thin or peel away.</p>
+<p>The board was a little curved in the milling machine, resulting in the <code class="language-plaintext highlighter-rouge">1/64"</code> bit going in to the board deeper than expected. It was still okay in this instance since it did not make any traces too thin or peel away. I verified that the traces were as intended using a multimeter in continuity mode.</p>
 
-<p>I soldered on the components, using Kapton tape to mask the board along the way. I also layered ~1mm of vinyl under the USB end of the board.</p>
+<p>I soldered on the components, using Kapton tape to mask the board along the way. I also layered <em>a credit card</em> thickness of vinyl under the USB end of the board.</p>
 
-<p>Sadly, my board did not work at first go, and Anthony expertly diagnosed that the regulator was not working as expected to convert 5V to 3.3V. There could have been a problem with the component, or perhaps a different regulator got mixed into the drawer.</p>
+<p>Sadly, my board did not work at first go, and Anthony expertly diagnosed that the regulator was not working as expected to convert <code class="language-plaintext highlighter-rouge">5V</code> to <code class="language-plaintext highlighter-rouge">3.3V</code>. There could have been a problem with the component, or perhaps a different regulator got mixed into the drawer.</p>
 
-<p>After fixing the issues, my board worked and I managed to upload some code to make the LED blink. Yay!</p>
+<p>After fixing the issues, my board worked and I managed to upload some code (see <a href="#programming-steps">steps</a> below) to make the LED blink. Yay!</p>
 
-<video width="630" poster="../images/week2/soundscape_white.jpg" muted="" autoplay="" loop="" controls="">
+<video width="630" poster="../images/week5/suncat.jpg" muted="" autoplay="" loop="" controls="">
         <source src="../images/week5/blinky.mp4" />
         <p class="warning">Your browser does not support HTML5 video.</p>
 </video>
 
+<p>It’s a good day to be a kitty cad.</p>
+
+<p><img src="../images/week5/suncat.jpg" alt="cat in the sun" /></p>
+
+<h3 id="programming-steps">Programming steps</h3>
+
+<ol>
+  <li>Program SAMD11C14A chip with bootloader using the <a href="https://github.com/mattairtech/ArduinoCore-samd/blob/master/bootloaders/zero/binaries/sam_ba_Generic_D11C14A_SAMD11C14A.bin">binary file</a> so that it can run code from Arduino. Use the <a href="https://github.com/ataradov/edbg">edbg utility</a> to load the binary onto the board.
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>edbg <span class="nt">-bpv</span> <span class="nt">-e</span> <span class="nt">-t</span> samd11 <span class="nt">-f</span> sam_ba_Generic_D11C14A_SAMD11C14A.bin
+</code></pre></div>    </div>
+  </li>
+  <li>Find and add the json link from <a href="https://github.com/mattairtech/ArduinoCore-samd">mattairtech</a> to Arduino’s preferences so that it can use <code class="language-plaintext highlighter-rouge">Generic_D11C14A</code> as a board. Make sure the board and port are correctly set up in Arduino (under <em>Tools</em>).</li>
+  <li>Now we can upload and use Arduino code for a blinky LED! Thanks to Anthony and Ben for troubleshooting the pin number:</li>
+</ol>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">setup</span><span class="p">()</span> <span class="p">{</span>
+<span class="n">pinMode</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
+<span class="n">SerialUSB</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">115200</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">loop</span><span class="p">()</span> <span class="p">{</span>
+<span class="n">digitalWrite</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="n">HIGH</span><span class="p">);</span>
+   <span class="n">delay</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span>
+   <span class="n">digitalWrite</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="n">LOW</span><span class="p">);</span>
+   <span class="n">delay</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
 <h2 id="2-pcb-observations">2. PCB observations</h2>
 
-<p>Matt and I used to oscilloscope to observe the signal in the LED, which had a frequency of 5Hz at ~3.3V.</p>
+<p>Matt and I used to oscilloscope to observe the signal in the LED, which in my code has a frequency of 5Hz and potential difference of ~3V.</p>
 
-<video width="630" poster="../images/week2/soundscape_white.jpg" muted="" autoplay="" loop="" controls="">
+<video width="630" poster="../images/week5/suncat.jpg" muted="" autoplay="" loop="" controls="">
         <source src="../images/week5/oscilloscope.mp4" />
         <p class="warning">Your browser does not support HTML5 video.</p>
 </video>
@@ -152,7 +189,7 @@ We also attempted to observe the usb 2.0 handshake across the D+ and D- pins and
 
 <h1 id="resources">Resources</h1>
 <ul>
-  <li><a href="https://vimeo.com/625848785/cbcd8b5d3e">Kicad recitation</a></li>
+  <li><a href="https://vimeo.com/625848785/cbcd8b5d3e">KiCad recitation</a></li>
   <li><a href="https://fabacademy.org/2020/labs/ulb/students/quentin-bolsee/projects/samd11c_uart-updi/">SAMD11C tutorial</a></li>
   <li><a href="https://github.com/mattairtech/ArduinoCore-samd">Arduino library for SAMD11C</a></li>
 </ul>
