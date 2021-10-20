@@ -6,12 +6,14 @@
 <meta name="viewport" content="width=device-width, minimum-scale=1.0">
 <title>Week 6</title>
 
-	<meta name="description" content="Page description">
+	<meta name="description" content="Computer-controlled machining">
 
 
 <link rel="icon" href="../favicon.ico" type="image/x-icon">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,500,500i,700,700i|Noto+Sans:400,400i,700,700i|Source+Code+Pro&amp;subset=latin-ext">
 <link rel="stylesheet" href="../site-theme/assets/css/style.css">
+
+ <!-- for mathjax support -->
 
 	</head>
 	<body class="red" data-spy="scroll" data-target=".js-scrollspy">
@@ -65,7 +67,7 @@
 									<h1 class="hero-subheader__title">Week 6</h1>
 								
 								
-									<p class="hero-subheader__desc">Page description</p>
+									<p class="hero-subheader__desc">Computer-controlled machining</p>
 								
 								
 									
@@ -93,7 +95,86 @@
 				<div class="row">
 					<div class="col-md-7">
 						<div class="content">
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce bibendum neque eget nunc mattis eu sollicitudin enim tincidunt. Vestibulum lacus tortor, ultricies id dignissim ac, bibendum in velit.</p>
+							<p align="right"><sub><sup>Oct 12, 2021</sup></sub></p>
+
+<h1 id="assignments">Assignments</h1>
+
+<p>Design, mill, assemble something big <a href="#make-something-big"><i class="icon icon--chevron-down"></i></a><br />
+<sub>- Don’t use fasteners or glue</sub><br />
+<sub>- Include curved surfaces</sub></p>
+
+<h2 id="make-something-big">Make something big</h2>
+<p>Following <a href="../Week5">last week</a>’s experiments with a Singapura cat design I wanted to fabricate an XL cat.</p>
+
+<p>I like the look of 3D slices assembled to form curves and more complex geometries, so I explored various ways of creating them.</p>
+
+<p>After experimenting with Grasshopper contour and Fusion 360 slicer, I decided to use the latter as, while more buggy, it is also more efficient. It is has a convenient autolayout feature. Slot widths and other parameters can be parametrically adjusted, so I could quickly create many designs.</p>
+
+<video width="630" poster="../images/week6/thumbnail.jpg" muted="" autoplay="" loop="" controls="">
+        <source src="../images/week6/slicer.mp4" />
+        <p class="warning">Your browser does not support HTML5 video.</p>
+</video>
+
+<p>While more pieces would probably look better, I decided to go easy on this after realizing during training that OSB was not a friendly material to work with. I first prototyped my design in cardboard for a sanity check.</p>
+
+<p><img src="../images/week6/cardboard.jpg" alt="cardboard cat" /></p>
+
+<p>I made some minor tweaks and then added the dogbone slots and scaled it up to CNC out of OSB. I maximized the size of the cat for the 4’ x 4’ OSB.</p>
+
+<p>Here is how Anthony and I prepped the file to be machined:</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/7_Z8Ym5VYhU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+
+<p>Among the important bits are checking the design, sizing, tabs, onion skin, and calibrating the axes.</p>
+
+<video width="630" poster="../images/week6/thumbanil.jpg" muted="" autoplay="" loop="" controls="">
+        <source src="../images/week6/cncshort.mp4" />
+        <p class="warning">Your browser does not support HTML5 video.</p>
+</video>
+
+<p>After securing the material with composite nails and checking the machine calibration, the design is ready to be machined!</p>
+
+<video width="630" poster="../images/week6/thumbnail.jpg" muted="" autoplay="" loop="" controls="">
+        <source src="../images/week6/cnc.mp4" />
+        <p class="warning">Your browser does not support HTML5 video.</p>
+</video>
+
+<p>We released the sheet using a crowbar, and tada~</p>
+
+<video width="630" poster="../images/week6/thumbanil.jpg" muted="" autoplay="" loop="" controls="">
+        <source src="../images/week6/cut.mp4" />
+        <p class="warning">Your browser does not support HTML5 video.</p>
+</video>
+
+<p>Thus begins the laborious cutting and rasping process. This process took 3 hours and was a great workout. Massive props to Anthony for chipping in (or <em>away</em>?) on this.</p>
+
+<video width="630" poster="../images/week6/thumbanil.jpg" muted="" autoplay="" loop="" controls="">
+        <source src="../images/week6/cutting.mp4" />
+        <p class="warning">Your browser does not support HTML5 video.</p>
+</video>
+
+<p>I used Fusion 360 to reference my pieces as I was assembling them.</p>
+
+<video width="630" poster="../images/week6/thumbanil.jpg" muted="" autoplay="" loop="" controls="">
+        <source src="../images/week6/order.mp4" />
+        <p class="warning">Your browser does not support HTML5 video.</p>
+</video>
+
+<p>Next morning, a kitty’s first trip to the river:</p>
+
+<video width="630" poster="../images/week6/thumbanil.jpg" muted="" autoplay="" loop="" controls="">
+        <source src="../images/week6/cncat.mp4" />
+        <p class="warning">Your browser does not support HTML5 video.</p>
+</video>
+
+<p>Another good day to be kitty!</p>
+
+<h3 id="reflections">Reflections</h3>
+<ol>
+  <li>The assembly process can be pretty brutal, especially if the onion skin is thick and there are many tabs (which are also critical for safety).</li>
+  <li>OSB tends to split when rasped. Besides the aesthetic aspect, gloves were critical for me to be able to complete this task without also obtaining a thousand splinters.</li>
+  <li>I didn’t have bandwidth this week for an overhaul of my initial design. In the future, I would like to CNC something else, perhaps with a ‘nicer’ material. I would also like to explore different finishes.</li>
+</ol>
 
 						</div><!-- /.content -->
 					</div><!-- /.col -->
