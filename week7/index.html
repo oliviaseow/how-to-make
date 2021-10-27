@@ -13,6 +13,8 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,500,500i,700,700i|Noto+Sans:400,400i,700,700i|Source+Code+Pro&amp;subset=latin-ext">
 <link rel="stylesheet" href="../site-theme/assets/css/style.css">
 
+ <!-- for mathjax support -->
+
 	</head>
 	<body class="red" data-spy="scroll" data-target=".js-scrollspy">
 		
@@ -93,7 +95,87 @@
 				<div class="row">
 					<div class="col-md-7">
 						<div class="content">
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce bibendum neque eget nunc mattis eu sollicitudin enim tincidunt. Vestibulum lacus tortor, ultricies id dignissim ac, bibendum in velit.</p>
+							<p align="right"><sub><sup>Oct 20, 2021</sup></sub></p>
+
+<h1 id="assignments">Assignments</h1>
+
+<ol>
+  <li>Read the data sheet for your microcontroller <a href="#1-samd11c-datasheet"><i class="icon icon--chevron-down"></i></a><br /></li>
+  <li>Program your board to do something <a href="#2-do-something"><i class="icon icon--chevron-down"></i></a><br /></li>
+  <li>Compare the performance and development workflow for other architectures <a href="#3-architecture-comparisons"><i class="icon icon--chevron-down"></i></a><br /></li>
+</ol>
+
+<h2 id="1-samd11c-datasheet">1. SAMD11C datasheet</h2>
+
+<p>Scanning the 981 page <a href="http://ww1.microchip.com/downloads/en/devicedoc/atmel-42363-sam-d11_datasheet.pdf">datasheet</a>, I was particularly curious about using capacitive touch with the D11C microcontroller.</p>
+
+<p>Page 854 goes over different architectures for self- and mutual-capacitance. I wanted to try out the self-capacitance functionality and create a Makey-Makey esque fruit controller.</p>
+
+<p><img src="https://github.com/jgilbert20/Libre_PTC/raw/master/images/42195-page18.png" alt="self capacitance" /></p>
+
+<p>However, I found that (according to <a href="https://github.com/jgilbert20/Libre_PTC#the-ptc-downfall-a-big-binary-blob-called-qtouch">this</a>) access to Atmel’s Peripheral Touch Controller (PTC) is close-sourced and hence not accessible through the Arduino IDE.</p>
+
+<p><a href="https://github.com/jgilbert20/Libre_PTC">Libre PTC</a> is a casual library that attempts to provide access to the PTC functionality by reverse engineering. Unfortunately, I got stuck in the same way as in <a href="https://github.com/jgilbert20/Libre_PTC/issues/3">one of the issues</a> on the GitHub repo. Perhaps the library has become outdated since it was last updated 4 years ago.</p>
+
+<h2 id="2-do-something">2. Do something</h2>
+
+<p><img src="../images/week5/suncat.jpg" alt="cat in the sun" /></p>
+
+<p>I had already gotten my board to work in <a href="../week5">Week 5</a>, and I wanted to try extending it with capacitive touch functionality. While trying to get Atmel PTC to work, I found that when I did not set up the D11C internal pull up resistor, my finger could actually trigger the LED without directly pressing the button. Funny!</p>
+
+<video width="630" poster="../images/week5/suncat.jpg" muted="" autoplay="" loop="" controls="">
+        <source src="../images/week7/interfere.mp4" />
+        <p class="warning">Your browser does not support HTML5 video.</p>
+</video>
+<p><br />
+I have been very curious about shape memory wire for some time, so I also wanted to make another board that can be used to actuate nitinol wire, perhaps like a blooming flower.</p>
+
+<p>To start, I tried to train the wire to form a petal shape. This involved bringing the wire up to 500°C for ten minutes. I tried different arrangements attached to various metal paraphernalia to see what would work best.</p>
+
+<p><img src="../images/week7/arrangement.jpg" alt="arrangement" /></p>
+
+<p>However, my makeshift <em>oven</em> set up at the EECS shop was not able to control temperature very well. One hot air gun was insufficient to bring the temperature up to spec, so I used two (making sure to connect to different outlets). The aluminium foil helped to contain heat, but sometimes worked a little too well, and it also made it more difficult to regulate the temperature and keep an eye on progress. Moreover, the multimeter thermometer is not suited for such high temperatures and the cable would brown if held near the heat for an extended time. Special thanks to Anthony, Carson, and Jax, for bearing with the heat while I experimented!</p>
+
+<p><img src="../images/week7/oven.jpg" alt="oven" /></p>
+
+<p>I also tried to use a thermal camera to track the temperature, however this again was limited.</p>
+
+<p><img src="../images/week7/thermal.jpg" alt="thermal image" /></p>
+
+<p>Here after “training” the wires were connected to 5V (max 1A) to simulate USB power.</p>
+
+<video width="630" poster="../images/week5/suncat.jpg" muted="" autoplay="" loop="" controls="">
+        <source src="../images/week7/trained.mp4" />
+        <p class="warning">Your browser does not support HTML5 video.</p>
+</video>
+
+<p>This wire had to be nudged for it to overcome tension:</p>
+<video width="630" poster="../images/week5/suncat.jpg" muted="" autoplay="" loop="" controls="">
+        <source src="../images/week7/wiremove.mp4" />
+        <p class="warning">Your browser does not support HTML5 video.</p>
+</video>
+
+<p>In the above two cases the wires did move… but not back to their exact previous forms as desired. Besides the lack of oven temperature control, I found that complex shapes were difficult to <em>re-inflate</em> bceause of their internal tensions and underconstrained nature after being released from their “molds”. Creating one petal at a time worked better.</p>
+
+<video width="630" poster="../images/week5/suncat.jpg" muted="" autoplay="" loop="" controls="">
+        <source src="../images/week7/sma.mp4" />
+        <p class="warning">Your browser does not support HTML5 video.</p>
+</video>
+
+<p>I designed another PCB that will be used to create a blooming flower. An N-channel MOSFET is used to conect each of the 5 petals in parallel to 5V.</p>
+
+<p><img src="../images/week7/bloomcomponent.jpg" alt="bloom components" />
+<img src="../images/week7/bloomtrace.jpg" alt="bloom traces" /></p>
+
+<p>Sadly the Roland machine failed me this week as the traces look scraggly and broken in places. Maybe the end mill had gone dull? I will have to further investigate.</p>
+
+<p><img src="../images/week7/scraggly.jpg" alt="scraggly traces" /></p>
+
+<h2 id="3-architecture-comparisons">3. Architecture comparisons</h2>
+
+<p>It appears that all of us in the EECS section used the <code class="language-plaintext highlighter-rouge">D11C</code> architecture. For the above project, I also considered using an <code class="language-plaintext highlighter-rouge">ATTiny</code> chip as it would allow me to skip the <code class="language-plaintext highlighter-rouge">3.3V</code> regulator. However, it has a <a href="https://fabacademy.org/2020/labs/ulb/students/quentin-bolsee/assignments/week09/#attiny1614-i2c-screen">different programming method</a> and would not have a USB connector.</p>
+
+<p>For ease of implementing capacitive touch, I could also have used a <code class="language-plaintext highlighter-rouge">D21C</code> microcontroller, as Adafruit had worked with Atmel (<a href="https://arduino.stackexchange.com/questions/43663/built-in-capacitive-touch-detection-with-samd21-development-board-arduino-zero">allegedly</a>) to create a <a href="https://github.com/adafruit/Adafruit_FreeTouch">QTouch-compatible library</a> for these chips.</p>
 
 						</div><!-- /.content -->
 					</div><!-- /.col -->
