@@ -6,12 +6,14 @@
 <meta name="viewport" content="width=device-width, minimum-scale=1.0">
 <title>Week 8</title>
 
-	<meta name="description" content="Page description">
+	<meta name="description" content="Molding and casting">
 
 
 <link rel="icon" href="../favicon.ico" type="image/x-icon">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,500,500i,700,700i|Noto+Sans:400,400i,700,700i|Source+Code+Pro&amp;subset=latin-ext">
 <link rel="stylesheet" href="../site-theme/assets/css/style.css">
+
+ <!-- for mathjax support -->
 
 	</head>
 	<body class="red" data-spy="scroll" data-target=".js-scrollspy">
@@ -65,7 +67,7 @@
 									<h1 class="hero-subheader__title">Week 8</h1>
 								
 								
-									<p class="hero-subheader__desc">Page description</p>
+									<p class="hero-subheader__desc">Molding and casting</p>
 								
 								
 									
@@ -93,7 +95,147 @@
 				<div class="row">
 					<div class="col-md-7">
 						<div class="content">
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce bibendum neque eget nunc mattis eu sollicitudin enim tincidunt. Vestibulum lacus tortor, ultricies id dignissim ac, bibendum in velit.</p>
+							<p align="right"><sub><sup>Oct 27, 2021</sup></sub></p>
+
+<h1 id="assignments">Assignments</h1>
+
+<ol>
+  <li>Design a mold around your stock and tooling <a href="#1-mold-design"><i class="icon icon--chevron-down"></i></a><br /></li>
+  <li>Rough cut and finish cut <a href="#2-milling"><i class="icon icon--chevron-down"></i></a><br /></li>
+  <li>Cast parts <a href="#3-casting"><i class="icon icon--chevron-down"></i></a><br /></li>
+</ol>
+
+<h2 id="1-mold-design">1. Mold design</h2>
+
+<p>Another week, another kitty (or 10).</p>
+
+<p>I found a reference cat online and used Blender to sculpt my cat with flattened whiskers and a flat back so that it could be milled on our machine and used as a mold.</p>
+
+<p><img src="../images/week8/blender.jpg" alt="blender" /></p>
+
+<p>In Fusion 360, I placed the cat in a <code class="language-plaintext highlighter-rouge">7"</code> x <code class="language-plaintext highlighter-rouge">3"</code> x <code class="language-plaintext highlighter-rouge">1.5"</code> trough (<code class="language-plaintext highlighter-rouge">0.5"</code> all around) with two sections. I wanted to have different versions of the cats in each section, but Fusion 360 kept crashing (it did not like cats without whiskers?), so I duplicated the one cat that worked instead.</p>
+
+<p>Fusion 360 works sluggishly with .stl files, but thankfully Anthony patiently guided me through troubleshooting and setting up the files for CAM.</p>
+
+<ul>
+  <li><a href="https://www.dropbox.com/s/v7spvhixqug9d4e/kitty.f3d?dl=0">F3d file</a></li>
+  <li><a href="https://www.dropbox.com/sh/j7emojh2sscs8h2/AAC39J16uB73ifpoYuTA4uRua?dl=0">CAM files</a></li>
+  <li>Anthony’s CAM <a href="https://vimeo.com/640159305">video</a> and <a href="https://gitlab.cba.mit.edu/classes/863.21/site/-/blob/main/doc/CAM_Recitation/2021/ToolpathPlanning.md">documentation</a></li>
+</ul>
+
+<h2 id="2-milling">2. Milling</h2>
+
+<p>After securing the wax block with a glue gun, attaching and calibrating the end mill, and wearing hearing protection, we were ready to go!</p>
+
+<video width="630" poster="../images/week8/catfam.jpg" muted="" autoplay="" loop="" controls="">
+        <source src="../images/week8/milling.mp4" />
+        <p class="warning">Your browser does not support HTML5 video.</p>
+</video>
+
+<p>Expectedly, the parallel pass and pencil finishing passes were most helpful for revealing the details on the cat’s features. Since I had two identical cats, I added an additional parallel pass to one of the cats, running 90 degrees.</p>
+
+<p>Final wax mold:</p>
+
+<p><img src="../images/week8/wax.jpg" alt="wax" />
+Left: parallel pass in y, Right: parallel pass in x and y</p>
+
+<p>Neither version was as smooth as desired and I wanted to use a heat gun to smooth it out. After a quick experiment, I discovered that I was not able to control the wax melting as much as I would need to achieve a smooth surface on the 3D cat. I will try again when I gather the courage.</p>
+
+<p>For comparison, I created a version of the same mold on the Prusa 3D printer with PLA filament (15% infill).</p>
+
+<p><img src="../images/week8/3dprint.jpg" alt="3d print" />
+Left: fresh from the printer, Right: post heat gun (striations still present, but shinier. Walls wonky.)</p>
+
+<p>Here they are again after casting the oomoo negatives:</p>
+
+<p><img src="../images/week8/oomoo.jpg" alt="oomoo" /></p>
+
+<p>The 3D printed version has overhangs under the arms of the cats. This causes that part of the oomoo mold to rip when removing a cast part.</p>
+
+<h2 id="3-casting">3. Casting</h2>
+
+<p>I was particularly interested in experimenting with mixing colors and textures in the casts.</p>
+
+<h3 id="dual-color-dry-stone">Dual color dry stone</h3>
+
+<p>My first cast in dry stone was not bubble-free, but gave me a good idea about pouring the casting liquid quickly and cleanly. The heart was dry stone that was dyed with <a href="https://www.smooth-on.com/products/so-strong/">Smooth-on SO-Strong</a> colorant. I like how the top of the heart turned out.</p>
+
+<p><img src="../images/week8/drystone.jpg" alt="drystone" /></p>
+
+<h3 id="eastcoastresin">EastCoastResin</h3>
+
+<p>Second, I wanted to experiment with clear resin casts.</p>
+
+<video width="630" poster="../images/week8/catfam.jpg" muted="" autoplay="" loop="" controls="">
+        <source src="../images/week8/timelapse.mp4" />
+        <p class="warning">Your browser does not support HTML5 video.</p>
+</video>
+
+<p>In the above video I am painting a mold with acrylic pens (they don’t work very well on oomoo, but transfer ok to resin), mixing the resin (using the vacuum chamber to remove bubbles), pouring the resin into the mold with a dropper, and popping surface bubbles with a lighter. I also cut out a piece of reflective film and added it to the back of one of the cats.</p>
+
+<p>The <em>Crystal Clear</em> EastCoastResin.com resin was already yellow when I poured it into the mold.</p>
+
+<p>I also mixed a batch of resin with photochromic purple pigment which turns blue when not exposed to the sun.</p>
+
+<p>Final result:</p>
+
+<p><img src="../images/week8/two.jpg" alt="two cats" />
+Left: resin + painted mold + reflective film at the back<br />
+Right: resin + photochromic pigment</p>
+
+<p>The reflective film was a little curly, and I wasn’t able to straighten it out in the resin. However, I felt like it achieved a nice effect. Several people commented that the cat looked like it was glowing.</p>
+
+<p><img src="../images/week8/glow.jpg" alt="glow" /></p>
+
+<p>And then there were 3.
+<img src="../images/week8/three.jpg" alt="three cats" /></p>
+
+<h3 id="teexpert-resin">Teexpert resin</h3>
+
+<p>Next, I obtained some resin that wasn’t <em>pre-yellowed</em> for more experimentation. I also wanted to cast an LED inside the cat, and realized I could reuse my <a href="../week3#planning-the-circuit">antenna calculator</a> to create wireless light-up cats.</p>
+
+<video width="630" poster="../images/week8/catfam.jpg" muted="" autoplay="" loop="" controls="">
+        <source src="../images/week8/roland.mp4" />
+        <p class="warning">Your browser does not support HTML5 video.</p>
+</video>
+
+<p>I used the Roland milling machine to create a PCB cat shape with NFC antenna on one side and reflective film on the other. I initially wanted to vinyl cut the reflective film, but later realized I could mill it altogether (post, I realized this resulted in a lot of trapped dust and that I could cut it out with a scissors with little discernable cut-quality difference).</p>
+
+<p>I was very happy that it works!</p>
+
+<video width="630" poster="../images/week8/catfam.jpg" muted="" autoplay="" loop="" controls="">
+        <source src="../images/week8/nfc.mp4" />
+        <p class="warning">Your browser does not support HTML5 video.</p>
+</video>
+
+<p>While the milling machines were busy, I also experimented with coiling magnet wire in a similar fashion and was pleasantly surprised to find that they also work, albeit less brightly (which makes sense with the messy nature of my manual coil winding))</p>
+
+<p>I continued to play with pigments and styles and embedded my NFC-powered LED into some of the molds. Fine glitter works exceptionally well when cast in layers with the clear epoxy resin.</p>
+
+<p>I created my cat family so I can live out my cat lady dreams.</p>
+
+<video width="630" poster="../images/week8/catfam.jpg" muted="" autoplay="" loop="" controls="">
+        <source src="../images/week8/catfamvid.mp4" />
+        <p class="warning">Your browser does not support HTML5 video.</p>
+</video>
+
+<p>As aforementioned, the cats picked up striations left behind by the milling process. I wanted to see if I could smooth this out with a final resin “glaze”.</p>
+
+<video width="630" poster="../images/week8/catfam.jpg" muted="" autoplay="" loop="" controls="">
+        <source src="../images/week8/icing.mp4" />
+        <p class="warning">Your browser does not support HTML5 video.</p>
+</video>
+
+<p>Thanks Dave for the video!</p>
+
+<p><img src="../images/week8/glazed.jpg" alt="glazed cat" />
+Left: before <em>glazing</em> (with black resin backing), right: after <em>glazing</em></p>
+
+<p>This “glazing” process seems to work quite well! One tricky issue however was not having a place to hold the piece while the epoxy cured. I did not want them to become fused to the wooden sticks, so I put them on top of their oomoo molds. This resulted in some resin pooling, and may have led to some passers-by assuming they were done curing and handling them, thus disrupting the cure. In the future, I would create a 3D printed mold for a spiky oomoo mat to hold my prints, and store them in a box to avoid disruption.</p>
+
+<p>The cats are now curing under more coats of resin… Hopefully they will look okay by class time!</p>
+
+<p><img src="../images/week8/box.jpg" alt="glazed cat" /></p>
 
 						</div><!-- /.content -->
 					</div><!-- /.col -->
