@@ -127,49 +127,6 @@
         <source src="../images/week7/interfere.mp4" />
         <p class="warning">Your browser does not support HTML5 video.</p>
 </video>
-<p><br />
-I have been very curious about shape memory wire for some time, so I also wanted to make another board that can be used to actuate nitinol wire, perhaps like a blooming flower.</p>
-
-<p>To start, I tried to train the wire to form a petal shape. This involved bringing the wire up to 500°C for ten minutes. I tried different arrangements attached to various metal paraphernalia to see what would work best.</p>
-
-<p><img src="../images/week7/arrangement.jpg" alt="arrangement" /></p>
-
-<p>However, my makeshift <em>oven</em> set up at the EECS shop was not able to control temperature very well. One hot air gun was insufficient to bring the temperature up to spec, so I used two (making sure to connect to different outlets). The aluminium foil helped to contain heat, but sometimes worked a little too well, and it also made it more difficult to regulate the temperature and keep an eye on progress. Moreover, the multimeter thermometer is not suited for such high temperatures and the cable would brown if held near the heat for an extended time. Special thanks to Anthony, Carson, and Jax, for bearing with the heat while I experimented!</p>
-
-<p><img src="../images/week7/oven.jpg" alt="oven" /></p>
-
-<p>I also tried to use a thermal camera to track the temperature, however this again was limited.</p>
-
-<p><img src="../images/week7/thermal.jpg" alt="thermal image" /></p>
-
-<p>Here after “training” the wires were connected to 5V (max 1A) to simulate USB power.</p>
-
-<video width="630" poster="../images/week5/suncat.jpg" muted="" autoplay="" loop="" controls="">
-        <source src="../images/week7/trained.mp4" />
-        <p class="warning">Your browser does not support HTML5 video.</p>
-</video>
-
-<p>This wire had to be nudged for it to overcome tension:</p>
-<video width="630" poster="../images/week5/suncat.jpg" muted="" autoplay="" loop="" controls="">
-        <source src="../images/week7/wiremove.mp4" />
-        <p class="warning">Your browser does not support HTML5 video.</p>
-</video>
-
-<p>In the above two cases the wires did move… but not back to their exact previous forms as desired. Besides the lack of oven temperature control, I found that complex shapes were difficult to <em>re-inflate</em> bceause of their internal tensions and underconstrained nature after being released from their “molds”. Creating one petal at a time worked better.</p>
-
-<video width="630" poster="../images/week5/suncat.jpg" muted="" autoplay="" loop="" controls="">
-        <source src="../images/week7/sma.mp4" />
-        <p class="warning">Your browser does not support HTML5 video.</p>
-</video>
-
-<p>I designed another PCB that will be used to create a blooming flower. An N-channel MOSFET is used to conect each of the 5 petals in parallel to 5V.</p>
-
-<p><img src="../images/week7/bloomcomponent.jpg" alt="bloom components" />
-<img src="../images/week7/bloomtrace.jpg" alt="bloom traces" /></p>
-
-<p>Sadly the Roland machine failed me this week as the traces look scraggly and broken in places. Maybe the end mill had gone dull? I will have to further investigate.</p>
-
-<p><img src="../images/week7/scraggly.jpg" alt="scraggly traces" /></p>
 
 <h2 id="3-architecture-comparisons">3. Architecture comparisons</h2>
 

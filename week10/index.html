@@ -6,12 +6,21 @@
 <meta name="viewport" content="width=device-width, minimum-scale=1.0">
 <title>Week 10</title>
 
-	<meta name="description" content="Page description">
+	<meta name="description" content="Input & output devices">
 
 
 <link rel="icon" href="../favicon.ico" type="image/x-icon">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,500,500i,700,700i|Noto+Sans:400,400i,700,700i|Source+Code+Pro&amp;subset=latin-ext">
 <link rel="stylesheet" href="../site-theme/assets/css/style.css">
+
+ <!-- for mathjax support -->
+
+	<script type="text/x-mathjax-config">
+	MathJax.Hub.Config({
+	TeX: { equationNumbers: { autoNumber: "AMS" } }
+	});
+	</script>
+	<script type="text/javascript" async src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
 	</head>
 	<body class="red" data-spy="scroll" data-target=".js-scrollspy">
@@ -65,7 +74,7 @@
 									<h1 class="hero-subheader__title">Week 10</h1>
 								
 								
-									<p class="hero-subheader__desc">Page description</p>
+									<p class="hero-subheader__desc">Input & output devices</p>
 								
 								
 									
@@ -93,7 +102,218 @@
 				<div class="row">
 					<div class="col-md-7">
 						<div class="content">
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce bibendum neque eget nunc mattis eu sollicitudin enim tincidunt. Vestibulum lacus tortor, ultricies id dignissim ac, bibendum in velit.</p>
+							<p align="right"><sub><sup>Nov 3, 2021</sup></sub></p>
+
+<h1 id="assignments">Assignments</h1>
+
+<ol>
+  <li>Add an output device <a href="#1-output-device"><i class="icon icon--chevron-down"></i></a><br /></li>
+  <li>Measure the power consumption of the output device <a href="#power-consumption"><i class="icon icon--chevron-down"></i></a><br /></li>
+  <li>Add an input device <a href="#3-input-device"><i class="icon icon--chevron-down"></i></a><br /></li>
+</ol>
+
+<h2 id="1-output-device">1. Output device</h2>
+
+<p><em>Disclaimer: I started working on this project on Oct 27, 2021, before hearing Neil’s advice to stay away from SMA 👀</em></p>
+
+<p><em>After hearing Neil’s warning, I spoke to Jack about his experience with SMA and he mentioned that fishing line actuator would allow more precise length changes, but would typically be used to pull an external structure, like he did <a href="http://fab.cba.mit.edu/classes/863.19/CBA/people/jack/week-02.html">here</a>. Since I was going for qualitative movement and I wanted the <strong>wires themselves to form flower petals</strong>, I decided to venture forth with my experiment.</em></p>
+
+<hr />
+
+<p>I have been very curious about shape memory wire for some time, so I also wanted to make a board that can be used to actuate nitinol wire like a blooming flower.</p>
+
+<h3 id="sma-training">SMA training</h3>
+
+<p>To start, I tried to train the wire to form a petal shape. This involved bringing the wire up to 500°C for ten minutes. I tried different arrangements attached to various metal paraphernalia to see what would work best.</p>
+
+<p><img src="../images/week7/arrangement.jpg" alt="arrangement" /></p>
+
+<p>However, my makeshift <em>oven</em> set up at the EECS shop was not able to control temperature very well. One hot air gun was insufficient to bring the temperature up to spec, so I used two (making sure to connect to different outlets). The aluminium foil helped to contain heat, but sometimes worked a little too well, and it also made it more difficult to regulate the temperature and keep an eye on progress. Moreover, the multimeter thermometer is not suited for such high temperatures and the cable would brown if held near the heat for an extended time. Special thanks to Anthony, Carson, and Jax, for bearing with the heat while I experimented!</p>
+
+<p><img src="../images/week7/oven.jpg" alt="oven" /></p>
+
+<p>I also tried to use a thermal camera to track the temperature, however this again was limited.</p>
+
+<p><img src="../images/week7/thermal.jpg" alt="thermal image" /></p>
+
+<p>Here after “training” the wires were connected to 5V (max 1A) to simulate USB power.</p>
+
+<video width="630" poster="../images/week5/suncat.jpg" muted="" autoplay="" loop="" controls="">
+        <source src="../images/week7/trained.mp4" />
+        <p class="warning">Your browser does not support HTML5 video.</p>
+</video>
+
+<p>This wire had to be nudged for it to overcome tension:</p>
+<video width="630" poster="../images/week5/suncat.jpg" muted="" autoplay="" loop="" controls="">
+        <source src="../images/week7/wiremove.mp4" />
+        <p class="warning">Your browser does not support HTML5 video.</p>
+</video>
+
+<p>In the above two cases the wires did move… but not back to their exact previous forms as desired. Besides the lack of oven temperature control, I found that complex shapes were difficult to <em>re-inflate</em> bceause of their internal tensions and underconstrained nature after being released from their “molds”. Creating one petal at a time worked better.</p>
+
+<video width="630" poster="../images/week5/suncat.jpg" muted="" autoplay="" loop="" controls="">
+        <source src="../images/week7/sma.mp4" />
+        <p class="warning">Your browser does not support HTML5 video.</p>
+</video>
+
+<p>I designed a PCB that will be used to create a blooming flower. An N-channel MOSFET is used to conect each of the 5 petals in parallel to 5V.</p>
+
+<p><img src="../images/week7/bloomcomponent.jpg" alt="bloom components" />
+<img src="../images/week7/bloomtrace.jpg" alt="bloom traces" /></p>
+
+<p>Sadly the Roland machine failed me as the traces look scraggly and broken in places. Maybe the end mill had gone dull?</p>
+
+<p><img src="../images/week7/scraggly.jpg" alt="scraggly traces" /></p>
+
+<p>Eventually, I was able to mill and stuff my board :) Nitinol is not amenable to soldering. I tried scraping it and using the shop’s flux, but to no avail. To attach it to the flower, it is possible to use jumper cables. Eventually for added robustness, I removed the plastic from the jumper and crimped the ends (shown later).</p>
+
+<p><img src="../images/final/flowerpcb.jpg" alt="flowerpcb" /></p>
+
+<h3 id="parallel-failure">Parallel failure</h3>
+
+<p>During my tests, I had tested one petal at a time, and assumed that I could arrange all the petals in parallel as long as the SMA was the same length. I thought this was a good strategy so that in case one petal came loose, the others would still work.</p>
+
+<p>However, after arranging 5 petals together, I encountered a strange phenomenon where only one or two petals would actuate. Interestingly, the SMA has varying resistance, which drops drastically (<code class="language-plaintext highlighter-rouge">25kΩ</code> to <code class="language-plaintext highlighter-rouge">2Ω</code>) when it returns to “trained” state, which would then prevent the other petals from actuating.</p>
+
+<h3 id="series-success">Series success</h3>
+
+<p>Arranging the petals in series fixed this issue.</p>
+
+<video width="630" poster="../images/final/flowerpcb.jpg" muted="" autoplay="" loop="" controls="">
+        <source src="../images/final/nitinolflower.mp4" />
+        <p class="warning">Your browser does not support HTML5 video.</p>
+</video>
+
+<h3 id="power-consumption">Power consumption</h3>
+
+<p>I set the power supply to a current limit of <code class="language-plaintext highlighter-rouge">1A</code> and increased the voltage upward till the SMA actuated. I discovered that the optimal voltage was <code class="language-plaintext highlighter-rouge">8V</code>, and the SMA consumed <code class="language-plaintext highlighter-rouge">0.8A</code>. \(P = V \dot I = 6.4W\)</p>
+
+<p>The lab had power supply wall adapters of 12V 1A, so I would need to do PWM to achieve the right voltage.</p>
+
+<h3 id="a-new-board">A new board</h3>
+
+<p>Armed with this knowledge, I needed to design a new board. I decided to use an ESP32 so that I can continue working on this during networking week.</p>
+
+<p><img src="../images/week10/pcb2.jpg" alt="pcb2" />
+<img src="../images/week10/pcb1.jpg" alt="pcb1" /></p>
+
+<p>I also made pinouts for some <a href="https://randomnerdtutorials.com/esp32-pinout-reference-gpios/">usable pins</a> on the ESP32 for future use.</p>
+
+<p>blooooom pcb:</p>
+
+<p><img src="../images/week10/pcb.jpg" alt="pcb" />
+<sub>Files are in <a href="#resources">resources</a>.</sub></p>
+
+<h3 id="sma-aesthetic">SMA aesthetic</h3>
+
+<p>I experimented with different ways to make the petal more visible.</p>
+
+<p>It is possible to fill the petal with tacky PVA glue, like this (nail polish is being added on top of the dried glue):</p>
+
+<p><img src="http://4.bp.blogspot.com/-OJF0RmLYFWA/VYSANbPsHxI/AAAAAAAAHXU/I0gtIARBg3o/s1600/IMG_3125.JPG" alt="flower glue" />
+<sub>Source: <a href="http://alwaysarty.blogspot.com/2015/06/nail-varnish-wire-flower.html">Always Arty</a></sub></p>
+
+<p>However, this would make the SMA too rigid to move.</p>
+
+<p>I tried to use flexible fabric glue, but it did not spread the same way as tacky PVA glue. I have obtained some materials and will try to experiment with a semi-slime glue next.</p>
+
+<p>I also tried to wrap pipe cleaners around the SMA, but this also constrained its movement significantly.</p>
+
+<p>Eventually, I went with DIY pom poms to create a cherry blossom-esque aesthetic.</p>
+
+<p><img src="https://i5.walmartimages.com/asr/94906703-0993-476d-af8c-996f934314d8_1.998de08466fb97e37cdadb37688f615a.jpeg?odnHeight=612&amp;odnWidth=612&amp;odnBg=FFFFFF" alt="cherry blossom" />
+<sub>Source: Walmart</sub></p>
+
+<p><img src="../images/week10/pompom.jpg" alt="pompom" /></p>
+
+<h3 id="pwm">PWM</h3>
+
+<p>I connected my board to the oscilloscope to check that it was correctly producing an output from the PWM.</p>
+
+<p><img src="../images/week10/oscilloscope.jpg" alt="oscilloscope" /></p>
+
+<p>I checked my manual calibration function for selecting the right PWM to actuate the SMA using the <code class="language-plaintext highlighter-rouge">12V 1A</code> wall adaptor.</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">manualCalibration</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">Serial</span><span class="p">.</span><span class="n">available</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="n">Serial</span><span class="p">.</span><span class="n">parseInt</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">x</span> <span class="o">&lt;=</span> <span class="mi">255</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">ledcWrite</span><span class="p">(</span><span class="n">mosChannel</span><span class="p">,</span> <span class="n">x</span><span class="p">);</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">else</span> <span class="p">{</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"wrong value"</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">flush</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="putting-it-together">Putting it together</h3>
+
+<video width="630" poster="../images/week10/pompom.jpg" muted="" autoplay="" loop="" controls="">
+        <source src="https://www.dropbox.com/s/d1dinj1u1gva0pq/testing.mp4?dl=1" />
+        <p class="warning">Your browser does not support HTML5 video.</p>
+</video>
+
+<p>Yay! The SMA actuates when power is connected, and again when power is removed, but in a reverse motion. I like how eerie the movement feels, as though time is being reversed when the power is shut off.</p>
+
+<video width="630" poster="../images/week10/pompom.jpg" muted="" autoplay="" loop="" controls="">
+        <source src="https://www.dropbox.com/s/shrjlyp5ow3wa8c/flower.mp4?dl=1" />
+        <p class="warning">Your browser does not support HTML5 video.</p>
+</video>
+
+<p>Code (values are calibrated as described <a href="#pwm">above</a>):</p>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">const</span> <span class="kt">int</span> <span class="n">mosPin</span> <span class="o">=</span> <span class="mi">16</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">int</span> <span class="n">freq</span> <span class="o">=</span> <span class="mi">5000</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">int</span> <span class="n">mosChannel</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">int</span> <span class="n">resolution</span> <span class="o">=</span> <span class="mi">8</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">ledcSetup</span><span class="p">(</span><span class="n">mosChannel</span><span class="p">,</span> <span class="n">freq</span><span class="p">,</span> <span class="n">resolution</span><span class="p">);</span>
+  <span class="n">ledcAttachPin</span><span class="p">(</span><span class="n">mosPin</span><span class="p">,</span> <span class="n">mosChannel</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">loop</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">ledcWrite</span><span class="p">(</span><span class="n">mosChannel</span><span class="p">,</span> <span class="mi">155</span><span class="p">);</span>
+  <span class="n">delay</span><span class="p">(</span><span class="mi">9000</span><span class="p">);</span>
+  <span class="n">ledcWrite</span><span class="p">(</span><span class="n">mosChannel</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+  <span class="n">delay</span><span class="p">(</span><span class="mi">9000</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="3-input-device">3. Input device</h2>
+
+<p>I made a banana capacitive touch pad 🐒</p>
+
+<video width="630" poster="../images/week10/pompom.jpg" muted="" autoplay="" loop="" controls="">
+        <source src="https://www.dropbox.com/s/z9x3l5b266b4htb/banana.mp4?dl=1" />
+        <p class="warning">Your browser does not support HTML5 video.</p>
+</video>
+
+<p>This can be connected to the SMA flower, so that it blooms when the banana is touched. In the future, I can network two flowers so that touching one banana (or other capacitive extension) would actuate another flower remotely.</p>
+
+<h2 id="notes-to-self--future-improvements">Notes to self / future improvements</h2>
+
+<ol>
+  <li>If cutting and milling holes in a PCB using <a href="https://mods.cba.mit.edu/">Mods</a>, separate holes and edge cuts into different files, and do the holes first. This prevents the board from vibrating around after the edges are cut, which results in <em>wobbledy</em> holes.</li>
+  <li>Test all components together to avoid unexpected problems like varying resistance in a parallel circuit.</li>
+  <li>Add more structure to the flower (e.g. 3D printed holder, or a resin core) to prevent exposed metal areas from shorting.</li>
+  <li>Think you’re being gentle with the PCB? <em>BE GENTLER</em>. I fractured several pads during soldering and had to fix it by dragging solder over the broken pad.</li>
+  <li>Check the power supply! If the jack is not well designed, you may need to roll it around till it properly connects.</li>
+  <li>During testing, I connected the SMA for too long and may have <em>retrained</em> it. This resulted in some torsion when I rearranged the petals. Avoid this!</li>
+  <li>Move the <code class="language-plaintext highlighter-rouge">prog run</code> slider on the pcb so that it is not so near the petals, which makes it difficult to access. Also, find the right footprint for the slider so that it can be more mechanically stable. The footprint from the fab library currently has holes that are too far apart, so I had to snip off the nubs from the bottom of the slider and use some glue to hold it down instead.</li>
+  <li>Think about portability ahead of time. I tried to MacGyver an extension from my 12V wall adapter to the 3.3V regulator so that my ESP32 could be free from the FTDI power source, and ended up fracturing another pad (see photo below), so I gave up. It would have been easier to build it into the PCB design.</li>
+</ol>
+
+<p><img src="../images/week10/fracture.jpg" alt="fracture" /></p>
+
+<h2 id="resources">Resources</h2>
+
+<ol>
+  <li><a href="https://mit.zoom.us/rec/share/Zc3Ti-pOyZLidkHtL8BfNxnke-Xa4q_0O5IG_stWt8Fmb-zi2ePPIclVfyUIQHjy.UjNcRT09mW29VYM5">David’s recitation</a></li>
+  <li><a href="https://www.dropbox.com/sh/fbkahuxydx7a2zy/AAAj0pP0RJHX7RF40t56gBiEa?dl=0">blooooom PCB kicad and milling files</a></li>
+</ol>
 
 						</div><!-- /.content -->
 					</div><!-- /.col -->
