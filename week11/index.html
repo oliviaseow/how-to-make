@@ -6,12 +6,14 @@
 <meta name="viewport" content="width=device-width, minimum-scale=1.0">
 <title>Week 11</title>
 
-	<meta name="description" content="Page description">
+	<meta name="description" content="Networking & communications">
 
 
 <link rel="icon" href="../favicon.ico" type="image/x-icon">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,500,500i,700,700i|Noto+Sans:400,400i,700,700i|Source+Code+Pro&amp;subset=latin-ext">
 <link rel="stylesheet" href="../site-theme/assets/css/style.css">
+
+ <!-- for mathjax support -->
 
 	</head>
 	<body class="red" data-spy="scroll" data-target=".js-scrollspy">
@@ -65,7 +67,7 @@
 									<h1 class="hero-subheader__title">Week 11</h1>
 								
 								
-									<p class="hero-subheader__desc">Page description</p>
+									<p class="hero-subheader__desc">Networking & communications</p>
 								
 								
 									
@@ -93,7 +95,110 @@
 				<div class="row">
 					<div class="col-md-7">
 						<div class="content">
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce bibendum neque eget nunc mattis eu sollicitudin enim tincidunt. Vestibulum lacus tortor, ultricies id dignissim ac, bibendum in velit.</p>
+							<p align="right"><sub><sup>Nov 17, 2021</sup></sub></p>
+
+<h1 id="assignments">Assignments</h1>
+
+<p>Design, build, and connect wired or wireless node(s) with network or bus addresses <a href="#networked-devices"><i class="icon icon--chevron-down"></i></a><br /></p>
+
+<h2 id="networked-devices">Networked devices</h2>
+
+<p>Building on last week’s work, I set the ESP32 as an access point for a web server, and used the URI header to control the PWM signal to the <a href="../week10">SMA flower</a>.</p>
+
+<video width="630" poster="../images/week10/pompom.jpg" muted="" autoplay="" loop="" controls="">
+        <source src="https://www.dropbox.com/s/25nv3iehpffir8x/catkins-control.mp4?dl=1" />
+        <p class="warning">Your browser does not support HTML5 video.</p>
+</video>
+
+<p>Code</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="cp">#include &lt;WiFi.h&gt;
+</span>
+<span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">ssid</span>     <span class="o">=</span> <span class="s">""</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">password</span> <span class="o">=</span> <span class="s">""</span><span class="p">;</span>
+
+<span class="n">WiFiServer</span> <span class="nf">server</span><span class="p">(</span><span class="mi">80</span><span class="p">);</span>
+<span class="n">String</span> <span class="n">header</span><span class="p">;</span>
+<span class="n">String</span> <span class="n">PWMState</span> <span class="o">=</span> <span class="s">"off"</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">int</span> <span class="n">PWMpin</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">115200</span><span class="p">);</span>
+  <span class="n">pinMode</span><span class="p">(</span><span class="n">PWMpin</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
+  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PWMpin</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+
+  <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"Setting AP (Access Point)…"</span><span class="p">);</span>
+  <span class="n">WiFi</span><span class="p">.</span><span class="n">softAP</span><span class="p">(</span><span class="n">ssid</span><span class="p">,</span> <span class="n">password</span><span class="p">);</span>
+
+  <span class="n">IPAddress</span> <span class="n">IP</span> <span class="o">=</span> <span class="n">WiFi</span><span class="p">.</span><span class="n">softAPIP</span><span class="p">();</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"AP IP address: "</span><span class="p">);</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">IP</span><span class="p">);</span>
+  
+  <span class="n">server</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">loop</span><span class="p">(){</span>
+  <span class="n">WiFiClient</span> <span class="n">client</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">available</span><span class="p">();</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">client</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"New Client."</span><span class="p">);</span>
+    <span class="n">String</span> <span class="n">currentLine</span> <span class="o">=</span> <span class="s">""</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">client</span><span class="p">.</span><span class="n">connected</span><span class="p">())</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">client</span><span class="p">.</span><span class="n">available</span><span class="p">())</span> <span class="p">{</span>
+        <span class="kt">char</span> <span class="n">c</span> <span class="o">=</span> <span class="n">client</span><span class="p">.</span><span class="n">read</span><span class="p">();</span>
+        <span class="n">Serial</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+        <span class="n">header</span> <span class="o">+=</span> <span class="n">c</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">c</span> <span class="o">==</span> <span class="sc">'\n'</span><span class="p">)</span> <span class="p">{</span>
+          <span class="k">if</span> <span class="p">(</span><span class="n">currentLine</span><span class="p">.</span><span class="n">length</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">client</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"HTTP/1.1 200 OK"</span><span class="p">);</span>
+            <span class="n">client</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Content-type:text/html"</span><span class="p">);</span>
+            <span class="n">client</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Connection: close"</span><span class="p">);</span>
+            <span class="n">client</span><span class="p">.</span><span class="n">println</span><span class="p">();</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="n">header</span><span class="p">.</span><span class="n">indexOf</span><span class="p">(</span><span class="s">"GET /pwm/on"</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+              <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"PWM on"</span><span class="p">);</span>
+              <span class="n">PWMState</span> <span class="o">=</span> <span class="s">"on"</span><span class="p">;</span>
+              <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PWMpin</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">header</span><span class="p">.</span><span class="n">indexOf</span><span class="p">(</span><span class="s">"GET /pwm/off"</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+              <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"PWM off"</span><span class="p">);</span>
+              <span class="n">PWMState</span> <span class="o">=</span> <span class="s">"off"</span><span class="p">;</span>
+              <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PWMpin</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+            <span class="p">}</span>
+            
+            <span class="n">client</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"&lt;!DOCTYPE html&gt;&lt;html&gt;"</span><span class="p">);</span>
+            <span class="n">client</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"&lt;head&gt;&lt;meta name=</span><span class="se">\"</span><span class="s">viewport</span><span class="se">\"</span><span class="s"> content=</span><span class="se">\"</span><span class="s">width=device-width, initial-scale=1</span><span class="se">\"</span><span class="s">&gt;"</span><span class="p">);</span>
+            <span class="n">client</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"&lt;link rel=</span><span class="se">\"</span><span class="s">icon</span><span class="se">\"</span><span class="s"> href=</span><span class="se">\"</span><span class="s">data:,</span><span class="se">\"</span><span class="s">&gt;"</span><span class="p">);</span>
+            <span class="n">client</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"&lt;style&gt;html { font-family: Helvetica; display: inline-block; margin: 0px auto; text-align: center;}"</span><span class="p">);</span>
+            <span class="n">client</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">".button { background-color: #ffd1dc; border: none; color: white; padding: 16px 40px; border-radius: 100px;"</span><span class="p">);</span>
+            <span class="n">client</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"text-decoration: none; font-size: 30px; margin: 2px; cursor: pointer;}"</span><span class="p">);</span>
+            <span class="n">client</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">".button2 {background-color: #555555;}&lt;/style&gt;&lt;/head&gt;"</span><span class="p">);</span>
+            <span class="n">client</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"&lt;body&gt;&lt;h1&gt;Catkins Control&lt;/h1&gt;"</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">PWMState</span><span class="o">==</span><span class="s">"off"</span><span class="p">)</span> <span class="p">{</span>
+              <span class="n">client</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"&lt;p&gt;&lt;a href=</span><span class="se">\"</span><span class="s">/pwm/on</span><span class="se">\"</span><span class="s">&gt;&lt;button class=</span><span class="se">\"</span><span class="s">button</span><span class="se">\"</span><span class="s">&gt;ON&lt;/button&gt;&lt;/a&gt;&lt;/p&gt;"</span><span class="p">);</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+              <span class="n">client</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"&lt;p&gt;&lt;a href=</span><span class="se">\"</span><span class="s">/pwm/off</span><span class="se">\"</span><span class="s">&gt;&lt;button class=</span><span class="se">\"</span><span class="s">button button2</span><span class="se">\"</span><span class="s">&gt;OFF&lt;/button&gt;&lt;/a&gt;&lt;/p&gt;"</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="n">client</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"&lt;/body&gt;&lt;/html&gt;"</span><span class="p">);</span>
+            
+            <span class="n">client</span><span class="p">.</span><span class="n">println</span><span class="p">();</span>
+            <span class="k">break</span><span class="p">;</span>
+          <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="n">currentLine</span> <span class="o">=</span> <span class="s">""</span><span class="p">;</span>
+          <span class="p">}</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">c</span> <span class="o">!=</span> <span class="sc">'\r'</span><span class="p">)</span> <span class="p">{</span>
+          <span class="n">currentLine</span> <span class="o">+=</span> <span class="n">c</span><span class="p">;</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+    
+    <span class="n">header</span> <span class="o">=</span> <span class="s">""</span><span class="p">;</span>
+    <span class="n">client</span><span class="p">.</span><span class="n">stop</span><span class="p">();</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">""</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
 
 						</div><!-- /.content -->
 					</div><!-- /.col -->
