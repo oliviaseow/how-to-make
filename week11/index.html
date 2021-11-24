@@ -103,30 +103,59 @@
 
 <h2 id="networked-devices">Networked devices</h2>
 
-<p>Building on last week’s work, I set the ESP32 as an access point for a web server, and used the URI header to control the PWM signal to the <a href="../week10">SMA flower</a>.</p>
+<p>Using the WiFiClient example sketch and building off of modifications <a href="https://randomnerdtutorials.com/esp32-access-point-ap-web-server/">here</a>, I set the ESP32 as an access point for a web server, and tested to make sure that I could read clicks on the server in serial monitor.</p>
 
-<video width="630" poster="../images/week10/pompom.jpg" muted="" autoplay="" loop="" controls="">
+<video width="630" poster="../images/week11/catkins.jpg" muted="" autoplay="" loop="" controls="">
         <source src="https://www.dropbox.com/s/25nv3iehpffir8x/catkins-control.mp4?dl=1" />
         <p class="warning">Your browser does not support HTML5 video.</p>
 </video>
 
-<p>Code</p>
+<p>Than, I was able to use data from the URI header to control PWM signal to my SMA flower from <a href="../week10">last week</a>.
+<br /><br /></p>
 
-<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-<span class="cp">#include &lt;WiFi.h&gt;
+<video width="630" poster="../images/week11/catkins.jpg" muted="" autoplay="" loop="" controls="">
+        <source src="https://www.dropbox.com/s/ikupz3hf1ufki2x/catkins_control.mp4?dl=1" />
+        <p class="warning">Your browser does not support HTML5 video.</p>
+</video>
+
+<h2 id="tips-for-working-with-esp32">Tips for working with ESP32</h2>
+
+<p>Some learnings from helping folks get the ESP32 server up:</p>
+
+<ol>
+  <li>Make sure the ESP32 antenna is not blocked by metal.</li>
+  <li>Check if GPIO pins (e.g. for LEDs) are <a href="https://randomnerdtutorials.com/esp32-pinout-reference-gpios/">okay to use</a>.</li>
+  <li>If the port is not detected (check with <code class="language-plaintext highlighter-rouge">ioreg -p IOUSB</code> on Mac), you may need to install the <a href="https://ftdichip.com/drivers/">FTDI driver</a> and restart your computer. The FTDI cable should be detected even before the ESP32 board is connected.</li>
+  <li>When programming the board, ground the <code class="language-plaintext highlighter-rouge">prog run</code> pin. When done, slide the switch and press the reset button for the program to run.</li>
+  <li>Troubleshooting: try connecting ESP32 to mobile hotspot.</li>
+</ol>
+
+<p>Code:</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;WiFi.h&gt;
 </span>
+<span class="k">const</span> <span class="kt">int</span> <span class="n">mosPin</span> <span class="o">=</span> <span class="mi">16</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">int</span> <span class="n">freq</span> <span class="o">=</span> <span class="mi">5000</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">int</span> <span class="n">mosChannel</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">int</span> <span class="n">resolution</span> <span class="o">=</span> <span class="mi">8</span><span class="p">;</span>
 <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">ssid</span>     <span class="o">=</span> <span class="s">""</span><span class="p">;</span>
 <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">password</span> <span class="o">=</span> <span class="s">""</span><span class="p">;</span>
 
 <span class="n">WiFiServer</span> <span class="nf">server</span><span class="p">(</span><span class="mi">80</span><span class="p">);</span>
 <span class="n">String</span> <span class="n">header</span><span class="p">;</span>
-<span class="n">String</span> <span class="n">PWMState</span> <span class="o">=</span> <span class="s">"off"</span><span class="p">;</span>
-<span class="k">const</span> <span class="kt">int</span> <span class="n">PWMpin</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="n">String</span> <span class="n">PWMstate</span> <span class="o">=</span> <span class="s">"off"</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">int</span> <span class="n">LEDpin</span> <span class="o">=</span> <span class="mi">33</span><span class="p">;</span>
 
 <span class="kt">void</span> <span class="nf">setup</span><span class="p">()</span> <span class="p">{</span>
   <span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">115200</span><span class="p">);</span>
-  <span class="n">pinMode</span><span class="p">(</span><span class="n">PWMpin</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
-  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PWMpin</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+
+  <span class="k">while</span> <span class="p">(</span><span class="o">!</span><span class="n">Serial</span><span class="p">)</span> <span class="p">{</span>
+    <span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="n">ledcSetup</span><span class="p">(</span><span class="n">mosChannel</span><span class="p">,</span> <span class="n">freq</span><span class="p">,</span> <span class="n">resolution</span><span class="p">);</span>
+  <span class="n">ledcAttachPin</span><span class="p">(</span><span class="n">mosPin</span><span class="p">,</span> <span class="n">mosChannel</span><span class="p">);</span>
+  <span class="n">pinMode</span><span class="p">(</span><span class="n">LEDpin</span><span class="p">,</span> <span class="n">INPUT_PULLUP</span><span class="p">);</span>
 
   <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"Setting AP (Access Point)…"</span><span class="p">);</span>
   <span class="n">WiFi</span><span class="p">.</span><span class="n">softAP</span><span class="p">(</span><span class="n">ssid</span><span class="p">,</span> <span class="n">password</span><span class="p">);</span>
@@ -134,11 +163,12 @@
   <span class="n">IPAddress</span> <span class="n">IP</span> <span class="o">=</span> <span class="n">WiFi</span><span class="p">.</span><span class="n">softAPIP</span><span class="p">();</span>
   <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"AP IP address: "</span><span class="p">);</span>
   <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">IP</span><span class="p">);</span>
-  
   <span class="n">server</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span>
+  
 <span class="p">}</span>
 
 <span class="kt">void</span> <span class="nf">loop</span><span class="p">(){</span>
+  
   <span class="n">WiFiClient</span> <span class="n">client</span> <span class="o">=</span> <span class="n">server</span><span class="p">.</span><span class="n">available</span><span class="p">();</span>
 
   <span class="k">if</span> <span class="p">(</span><span class="n">client</span><span class="p">)</span> <span class="p">{</span>
@@ -155,15 +185,16 @@
             <span class="n">client</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Content-type:text/html"</span><span class="p">);</span>
             <span class="n">client</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Connection: close"</span><span class="p">);</span>
             <span class="n">client</span><span class="p">.</span><span class="n">println</span><span class="p">();</span>
-
             <span class="k">if</span> <span class="p">(</span><span class="n">header</span><span class="p">.</span><span class="n">indexOf</span><span class="p">(</span><span class="s">"GET /pwm/on"</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
               <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"PWM on"</span><span class="p">);</span>
-              <span class="n">PWMState</span> <span class="o">=</span> <span class="s">"on"</span><span class="p">;</span>
-              <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PWMpin</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+              <span class="n">PWMstate</span> <span class="o">=</span> <span class="s">"on"</span><span class="p">;</span>
+              <span class="n">pinMode</span><span class="p">(</span><span class="n">LEDpin</span><span class="p">,</span> <span class="n">INPUT_PULLUP</span><span class="p">);</span>
+              <span class="n">ledcWrite</span><span class="p">(</span><span class="n">mosChannel</span><span class="p">,</span> <span class="mi">155</span><span class="p">);</span>
             <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">header</span><span class="p">.</span><span class="n">indexOf</span><span class="p">(</span><span class="s">"GET /pwm/off"</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
               <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"PWM off"</span><span class="p">);</span>
-              <span class="n">PWMState</span> <span class="o">=</span> <span class="s">"off"</span><span class="p">;</span>
-              <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PWMpin</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+              <span class="n">PWMstate</span> <span class="o">=</span> <span class="s">"off"</span><span class="p">;</span>
+              <span class="n">pinMode</span><span class="p">(</span><span class="n">LEDpin</span><span class="p">,</span> <span class="n">INPUT</span><span class="p">);</span>
+              <span class="n">ledcWrite</span><span class="p">(</span><span class="n">mosChannel</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
             <span class="p">}</span>
             
             <span class="n">client</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"&lt;!DOCTYPE html&gt;&lt;html&gt;"</span><span class="p">);</span>
@@ -174,13 +205,12 @@
             <span class="n">client</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"text-decoration: none; font-size: 30px; margin: 2px; cursor: pointer;}"</span><span class="p">);</span>
             <span class="n">client</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">".button2 {background-color: #555555;}&lt;/style&gt;&lt;/head&gt;"</span><span class="p">);</span>
             <span class="n">client</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"&lt;body&gt;&lt;h1&gt;Catkins Control&lt;/h1&gt;"</span><span class="p">);</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">PWMState</span><span class="o">==</span><span class="s">"off"</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">PWMstate</span><span class="o">==</span><span class="s">"off"</span><span class="p">)</span> <span class="p">{</span>
               <span class="n">client</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"&lt;p&gt;&lt;a href=</span><span class="se">\"</span><span class="s">/pwm/on</span><span class="se">\"</span><span class="s">&gt;&lt;button class=</span><span class="se">\"</span><span class="s">button</span><span class="se">\"</span><span class="s">&gt;ON&lt;/button&gt;&lt;/a&gt;&lt;/p&gt;"</span><span class="p">);</span>
             <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
               <span class="n">client</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"&lt;p&gt;&lt;a href=</span><span class="se">\"</span><span class="s">/pwm/off</span><span class="se">\"</span><span class="s">&gt;&lt;button class=</span><span class="se">\"</span><span class="s">button button2</span><span class="se">\"</span><span class="s">&gt;OFF&lt;/button&gt;&lt;/a&gt;&lt;/p&gt;"</span><span class="p">);</span>
             <span class="p">}</span>
             <span class="n">client</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"&lt;/body&gt;&lt;/html&gt;"</span><span class="p">);</span>
-            
             <span class="n">client</span><span class="p">.</span><span class="n">println</span><span class="p">();</span>
             <span class="k">break</span><span class="p">;</span>
           <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
@@ -191,7 +221,6 @@
         <span class="p">}</span>
       <span class="p">}</span>
     <span class="p">}</span>
-    
     <span class="n">header</span> <span class="o">=</span> <span class="s">""</span><span class="p">;</span>
     <span class="n">client</span><span class="p">.</span><span class="n">stop</span><span class="p">();</span>
     <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">""</span><span class="p">);</span>
